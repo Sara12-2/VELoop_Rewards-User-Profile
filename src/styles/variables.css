@@ -1,0 +1,34 @@
+:root {
+  /* Backgrounds */
+  --bg-app: #161827;
+  --bg-card: #1e2137;
+  --bg-card-elevated: #252947;
+
+  /* Brand / accent */
+  --color-gold: #d4af37;
+  --color-gold-soft: #e8c766;
+  --color-silver: #c0c5ce;
+  --color-blue-soft: #7c9cf0;
+  --color-purple-muted: #9b8ce0;
+
+  /* Status */
+  --color-success: #4caf7d;
+  --color-warning: #d9a441;
+  --color-danger: #d9615f;
+
+  /* Text */
+  --text-primary: #f5f6fa;
+  --text-secondary: #a4a8bf;
+  --text-muted: #6b6f8a;
+
+  /* Borders / dividers */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+
+  /* Radii */
+  --radius-md: 12px;
+  --radius-lg: 18px;
+
+  /* Shadows */
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.25);
+  --shadow-card-hover: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
