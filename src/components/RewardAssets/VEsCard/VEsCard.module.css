@@ -1,0 +1,72 @@
+.card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.iconWrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(212, 175, 55, 0.14);
+  color: var(--color-gold-soft);
+}
+
+.infoBtn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+}
+
+.infoBtn:hover {
+  color: var(--text-secondary);
+}
+
+.value {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 14px 0 2px;
+}
+
+.label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  width: 200px;
+  background: #0f1120;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-card);
+  z-index: 10;
+}
