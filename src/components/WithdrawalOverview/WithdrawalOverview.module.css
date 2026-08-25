@@ -1,0 +1,149 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.totalCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(135deg, var(--bg-card), var(--bg-card-elevated));
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  box-shadow: var(--shadow-card);
+}
+
+.totalIconWrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(212, 175, 55, 0.14);
+  color: var(--color-gold-soft);
+  flex-shrink: 0;
+}
+
+.totalAmount {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.totalLabel {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 2px 0 0;
+}
+
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.statCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.statCard[data-status="approved"] {
+  border-color: rgba(76, 175, 125, 0.25);
+}
+
+.statCard[data-status="pending"] {
+  border-color: rgba(217, 164, 65, 0.25);
+}
+
+.statHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.statCard[data-status="approved"] .statHeader {
+  color: var(--color-success);
+}
+
+.statCard[data-status="pending"] .statHeader {
+  color: var(--color-warning);
+}
+
+.statValue {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.statLabel {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 6px 0 0;
+}
+
+.emptyState {
+  background: var(--bg-card);
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 32px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.emptyIcon {
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.emptyTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.emptyText {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0 0 10px;
+  max-width: 320px;
+}
+
+.emptyCta {
+  background: none;
+  border: none;
+  color: var(--color-gold-soft);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.emptyCta:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .statGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
