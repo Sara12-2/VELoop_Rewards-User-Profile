@@ -6,6 +6,7 @@ import WithdrawalOverview from "../../components/WithdrawalOverview/WithdrawalOv
 import QuickActions from "../../components/QuickActions/QuickActions";
 import ReferralSnapshot from "../../components/ReferralSnapshot/ReferralSnapshot";
 import RecentActivity from "../../components/RecentActivity/RecentActivity";
+import AccountInformation from "../../components/AccountInformation/AccountInformation";
 import { userData } from "../../data/userData";
 import { rewardsData, achievements } from "../../data/rewardsData";
 import { withdrawalData } from "../../data/withdrawalData";
@@ -43,7 +44,7 @@ export default function UserProfile() {
         <RecentActivity activity={activityData} />
       </div>
 
-      {/* Next: AccountInformation */}
+      <AccountInformation user={userData} />
     </div>
   );
 }
