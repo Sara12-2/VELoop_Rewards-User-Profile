@@ -5,7 +5,7 @@ A completely reimagined `/user-profile` experience for **VELOOP Rewards**, combi
 > Built as part of Task 14 — VELOOP Rewards Internship Program.
 
 🔗 **Live Demo:** [your-vercel-url-here.vercel.app](#)
-📦 **GitHub Repository:** [github.com/your-username/veloop-rewards-user-profile](#)
+📦 **GitHub Repository:** [https://github.com/Sara12-2/VELoop_Rewards-User-Profile](#)
 
 ---
 
