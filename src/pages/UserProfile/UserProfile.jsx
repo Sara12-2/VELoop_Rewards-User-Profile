@@ -4,9 +4,12 @@ import LevelProgress from "../../components/LevelProgress/LevelProgress";
 import { CurrentAchievement, NextAchievement } from "../../components/AchievementCard/AchievementCard";
 import WithdrawalOverview from "../../components/WithdrawalOverview/WithdrawalOverview";
 import QuickActions from "../../components/QuickActions/QuickActions";
+import ReferralSnapshot from "../../components/ReferralSnapshot/ReferralSnapshot";
+import RecentActivity from "../../components/RecentActivity/RecentActivity";
 import { userData } from "../../data/userData";
 import { rewardsData, achievements } from "../../data/rewardsData";
 import { withdrawalData } from "../../data/withdrawalData";
+import { activityData, referralData } from "../../data/activityData";
 import styles from "./UserProfile.module.css";
 
 export default function UserProfile() {
@@ -34,7 +37,13 @@ export default function UserProfile() {
 
       <WithdrawalOverview withdrawals={withdrawalData} />
       <QuickActions onAction={handleQuickAction} />
-      {/* Next: ReferralSnapshot */}
+
+      <div className={styles.twoCol}>
+        <ReferralSnapshot referral={referralData} />
+        <RecentActivity activity={activityData} />
+      </div>
+
+      {/* Next: AccountInformation */}
     </div>
   );
 }
