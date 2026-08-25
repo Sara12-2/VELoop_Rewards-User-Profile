@@ -2,14 +2,21 @@ import ProfileHero from "../../components/ProfileHero/ProfileHero";
 import RewardAssets from "../../components/RewardAssets/RewardAssets";
 import LevelProgress from "../../components/LevelProgress/LevelProgress";
 import { CurrentAchievement, NextAchievement } from "../../components/AchievementCard/AchievementCard";
+import WithdrawalOverview from "../../components/WithdrawalOverview/WithdrawalOverview";
+import QuickActions from "../../components/QuickActions/QuickActions";
 import { userData } from "../../data/userData";
 import { rewardsData, achievements } from "../../data/rewardsData";
+import { withdrawalData } from "../../data/withdrawalData";
 import styles from "./UserProfile.module.css";
 
 export default function UserProfile() {
   const handleViewAchievements = () => {
-    // Placeholder until an achievements route exists
     alert("Achievements page coming soon!");
+  };
+
+  const handleQuickAction = (actionId) => {
+    console.log("Quick action clicked:", actionId);
+    alert(`"${actionId}" feature coming soon!`);
   };
 
   return (
@@ -24,7 +31,10 @@ export default function UserProfile() {
           <NextAchievement achievement={achievements.next} />
         </div>
       </div>
-      {/* Next: WithdrawalOverview */}
+
+      <WithdrawalOverview withdrawals={withdrawalData} />
+      <QuickActions onAction={handleQuickAction} />
+      {/* Next: ReferralSnapshot */}
     </div>
   );
 }
