@@ -185,20 +185,6 @@ Mobile layout order: Hero → Identity → Reward Assets → Level/Achievements 
 
 ---
 
-## 🖼 Screenshots
-
-| Desktop | Tablet | Mobile |
-|---|---|---|
-| _add screenshot_ | _add screenshot_ | _add screenshot_ |
-
-| Profile Hero | Reward Assets | Level Progress |
-|---|---|---|
-| _add screenshot_ | _add screenshot_ | _add screenshot_ |
-
-| Withdrawal Overview | Quick Actions | Loading State |
-|---|---|---|
-| _add screenshot_ | _add screenshot_ | _add screenshot_ |
-
 ---
 
 ## 🎨 Design Direction
