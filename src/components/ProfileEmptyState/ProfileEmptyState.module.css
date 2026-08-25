@@ -1,0 +1,44 @@
+.wrap {
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+  padding: 40px 20px;
+}
+
+.icon {
+  color: var(--color-warning);
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.message {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0 0 12px;
+  max-width: 320px;
+}
+
+.cta {
+  background: var(--color-gold-soft);
+  color: var(--bg-app);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cta:hover {
+  background: var(--color-gold);
+}
