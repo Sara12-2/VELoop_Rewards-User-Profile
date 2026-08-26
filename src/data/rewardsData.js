@@ -5,22 +5,22 @@ export const rewardsData = {
   tokens: 5000,
   xp: {
     current: 6420,
-    levelFloor: 0,
-    nextLevelAt: 8000,
     level: 4,
     levelName: "Reward Explorer",
+    levelFloor: 5000,
+    nextLevelAt: 8000,
     xpToNextLevel: 1580,
-  },
+  }
 };
 
 export const achievements = {
   current: {
     name: "Gold Reward Hunter",
-    status: "unlocked",
+    unlocked: true,
   },
   next: {
     name: "Platinum",
     xpNeeded: 2500,
-    progress: 62, // percent
-  },
+    progress: 50,
+  }
 };
