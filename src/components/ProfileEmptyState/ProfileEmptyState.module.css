@@ -1,44 +1,397 @@
+/* src/components/ProfileEmptyState/ProfileEmptyState.module.css */
+
 .wrap {
-  min-height: 320px;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 48px 32px;
+  background: var(--gradient-bg, linear-gradient(145deg, #1a1b2e, #252640));
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.04));
+  border-radius: 20px;
   text-align: center;
-  gap: 8px;
-  padding: 40px 20px;
+  min-height: 300px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px) scale(0.98);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.icon {
-  color: var(--color-warning);
-  margin-bottom: 8px;
+.wrapVisible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
+.wrap::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--border-color, rgba(255, 215, 0, 0.2)), transparent);
+  opacity: 0.5;
+}
+
+/* Glow Ring */
+.glowRing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, var(--glow-color, rgba(255, 215, 0, 0.03)), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Particles */
+.particlesContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+  animation: floatParticle 4s ease-in-out infinite;
+}
+
+@keyframes floatParticle {
+  0% {
+    transform: translate(0, 0) scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(15px, -25px) scale(1.2);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate(-10px, -50px) scale(0);
+    opacity: 0;
+  }
+}
+
+/* Icon */
+.iconWrapper {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.04));
+  transition: all 0.4s ease;
+}
+
+.wrap:hover .iconWrapper {
+  transform: scale(1.05) rotate(-5deg);
+}
+
+.iconPulse {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--border-color, rgba(255, 215, 0, 0.1));
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+.iconShine {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 70%
+  );
+  animation: shine 3s ease-in-out infinite;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) rotate(45deg);
+  }
+}
+
+.iconWrapper svg {
+  position: relative;
+  z-index: 1;
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+/* Title */
 .title {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
-  color: var(--text-primary);
-  margin: 0;
+  color: #e0e1f0;
+  margin: 0 0 8px;
+  position: relative;
+  z-index: 1;
 }
 
+/* Message */
 .message {
-  font-size: 13px;
-  color: var(--text-secondary);
-  margin: 0 0 12px;
-  max-width: 320px;
+  font-size: 14px;
+  color: #8a8b9e;
+  margin: 0 0 24px;
+  max-width: 360px;
+  line-height: 1.5;
+  position: relative;
+  z-index: 1;
 }
 
+/* CTA Button */
 .cta {
-  background: var(--color-gold-soft);
-  color: var(--bg-app);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
   border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 13px;
-  font-weight: 700;
+  color: #161827;
+  padding: 10px 28px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.cta::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 70%
+  );
+  animation: btnShine 3s ease-in-out infinite;
+}
+
+@keyframes btnShine {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) rotate(45deg);
+  }
 }
 
 .cta:hover {
-  background: var(--color-gold);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 30px rgba(255, 215, 0, 0.25);
+}
+
+.cta:active {
+  transform: scale(0.95);
+}
+
+.ctaIcon {
+  animation: ctaIconSpin 2s ease-in-out infinite;
+}
+
+@keyframes ctaIconSpin {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+}
+
+/* Decorative Elements */
+.decorativeLine {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--border-color, rgba(255, 215, 0, 0.1)), transparent);
+  border-radius: 2px;
+}
+
+.decorativeDot1 {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--border-color, rgba(255, 215, 0, 0.05));
+  animation: dotFloat 3s ease-in-out infinite;
+}
+
+.decorativeDot2 {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border-color, rgba(255, 215, 0, 0.05));
+  animation: dotFloat 4s ease-in-out infinite 1s;
+}
+
+@keyframes dotFloat {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-10px);
+    opacity: 0.8;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .wrap {
+    padding: 36px 24px;
+    min-height: 250px;
+    border-radius: 16px;
+  }
+
+  .iconWrapper {
+    width: 60px;
+    height: 60px;
+  }
+
+  .iconWrapper svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .message {
+    font-size: 13px;
+    max-width: 280px;
+  }
+
+  .cta {
+    padding: 8px 24px;
+    font-size: 13px;
+  }
+
+  .glowRing {
+    width: 200px;
+    height: 200px;
+  }
+
+  .decorativeDot1,
+  .decorativeDot2 {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .wrap {
+    padding: 28px 16px;
+    min-height: 200px;
+    border-radius: 14px;
+  }
+
+  .iconWrapper {
+    width: 52px;
+    height: 52px;
+    margin-bottom: 12px;
+  }
+
+  .iconWrapper svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .title {
+    font-size: 15px;
+  }
+
+  .message {
+    font-size: 12px;
+    max-width: 240px;
+    margin-bottom: 16px;
+  }
+
+  .cta {
+    padding: 6px 20px;
+    font-size: 12px;
+  }
+
+  .cta svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .glowRing {
+    width: 150px;
+    height: 150px;
+  }
+
+  .particlesContainer {
+    display: none;
+  }
+
+  .decorativeLine {
+    display: none;
+  }
 }
