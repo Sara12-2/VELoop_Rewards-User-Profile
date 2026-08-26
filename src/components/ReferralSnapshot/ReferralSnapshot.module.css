@@ -1,194 +1,707 @@
+/* src/components/ReferralSnapshot/ReferralSnapshot.module.css */
+
 .section {
+  position: relative;
+  background: linear-gradient(145deg, #1a1b2e, #252640);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 215, 0, 0.08);
+  padding: 28px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.sectionVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.backgroundGlow {
+  position: absolute;
+  top: -30%;
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(76, 175, 80, 0.03), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: glowFloat 6s ease-in-out infinite;
+}
+
+@keyframes glowFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-20px, 20px) scale(1.1); }
+  66% { transform: translate(20px, -20px) scale(0.9); }
+}
+
+/* Header */
+.header {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.headerIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(102, 187, 106, 0.08));
+  color: #4CAF50;
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
 }
 
 .title {
   font-size: 18px;
   font-weight: 700;
-  color: var(--text-primary);
+  color: #ffffff;
   margin: 0;
+  letter-spacing: -0.02em;
 }
 
-.card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: 22px;
-  box-shadow: var(--shadow-card);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.codeRow {
-  position: relative;
-  display: flex;
+.headerBadge {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border-subtle);
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #4CAF50;
+  background: rgba(76, 175, 80, 0.1);
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(76, 175, 80, 0.15);
+}
+
+.headerBadge svg {
+  color: #4CAF50;
+}
+
+.viewAllBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: #8a8b9e;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 4px 12px;
+  border-radius: 8px;
+}
+
+.viewAllBtn:hover {
+  color: #4CAF50;
+  background: rgba(76, 175, 80, 0.05);
+}
+
+.viewAllBtn:hover svg {
+  transform: translateX(4px);
+}
+
+.viewAllBtn svg {
+  transition: transform 0.3s ease;
+}
+
+/* Referral Code Card */
+.referralCodeCard {
+  position: relative;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.06), rgba(102, 187, 106, 0.02));
+  border: 1px solid rgba(76, 175, 80, 0.12);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 20px;
+  transition: all 0.4s ease;
+}
+
+.referralCodeCard:hover {
+  border-color: rgba(76, 175, 80, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(76, 175, 80, 0.05);
 }
 
 .codeLabel {
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-
-.codeValueWrap {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #8a8b9e;
+  margin-bottom: 8px;
+}
+
+.codeLabel svg {
+  color: #4CAF50;
+}
+
+.codeWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .codeValue {
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 700;
-  color: var(--color-gold-soft);
-  letter-spacing: 0.02em;
+  color: #FFD700;
+  letter-spacing: 0.05em;
+  background: rgba(255, 215, 0, 0.05);
+  padding: 4px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 215, 0, 0.1);
 }
 
 .copyBtn {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  cursor: pointer;
+  position: relative;
   display: flex;
-  padding: 2px;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #8a8b9e;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 .copyBtn:hover {
-  color: var(--text-secondary);
+  background: rgba(76, 175, 80, 0.1);
+  border-color: rgba(76, 175, 80, 0.2);
+  color: #4CAF50;
 }
 
-.copiedToast {
+.copyBtnSuccess {
+  background: rgba(76, 175, 80, 0.15);
+  border-color: rgba(76, 175, 80, 0.3);
+  color: #4CAF50;
+}
+
+.copyTooltip {
   position: absolute;
-  right: 0;
-  top: -22px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--color-success);
-  background: rgba(76, 175, 125, 0.14);
-  padding: 3px 8px;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1b2e;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  padding: 4px 12px;
   border-radius: 6px;
+  font-size: 11px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
 }
 
+.copyBtn:hover .copyTooltip {
+  opacity: 1;
+}
+
+.codeShare {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.shareBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #8a8b9e;
+  padding: 4px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.shareBtn:hover {
+  background: rgba(76, 175, 80, 0.1);
+  border-color: rgba(76, 175, 80, 0.2);
+  color: #4CAF50;
+}
+
+/* Stats Grid */
 .statsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 12px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
 }
 
-.stat {
+.statCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 16px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: cardAppear 0.5s ease backwards;
 }
 
-.statIcon {
-  color: var(--color-blue-soft);
+.statCard:nth-child(1) { animation-delay: 0.10s; }
+.statCard:nth-child(2) { animation-delay: 0.15s; }
+.statCard:nth-child(3) { animation-delay: 0.20s; }
+
+@keyframes cardAppear {
+  0% { opacity: 0; transform: translateY(15px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.statCard:hover {
+  transform: translateY(-3px);
+  border-color: rgba(76, 175, 80, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.statIconWrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
+  background: rgba(76, 175, 80, 0.08);
+  color: #4CAF50;
+  transition: all 0.3s ease;
+}
+
+.statCard:hover .statIconWrapper {
+  transform: scale(1.05);
+}
+
+.statContent {
+  flex: 1;
+  min-width: 0;
 }
 
 .statValue {
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 700;
-  color: var(--text-primary);
-  margin: 0;
+  color: #ffffff;
+  display: block;
+  line-height: 1.2;
 }
 
 .statLabel {
   font-size: 11px;
-  color: var(--text-secondary);
-  margin: 2px 0 0;
+  color: #8a8b9e;
+  font-weight: 500;
 }
 
-.milestoneBlock {
+.statTrend {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  align-items: center;
+  gap: 2px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #4CAF50;
+  background: rgba(76, 175, 125, 0.08);
+  padding: 2px 8px;
+  border-radius: 6px;
+  flex-shrink: 0;
 }
 
-.milestoneLabelRow {
+.statTrend svg {
+  color: #4CAF50;
+}
+
+.statBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #FFD700;
+  background: rgba(255, 215, 0, 0.1);
+  padding: 2px 10px 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 215, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.statBadge svg {
+  color: #FFD700;
+}
+
+/* Milestone Card */
+.milestoneCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+  transition: all 0.4s ease;
+}
+
+.milestoneCard:hover {
+  border-color: rgba(76, 175, 80, 0.15);
+}
+
+.milestoneHeader {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.milestoneTitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 13px;
-  color: var(--text-secondary);
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.milestoneIcon {
+  color: #FFD700;
 }
 
 .milestoneCount {
-  color: var(--text-primary);
+  font-size: 13px;
   font-weight: 600;
+  color: #8a8b9e;
 }
 
-.track {
+.milestoneTrack {
   height: 8px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.06);
-  overflow: hidden;
+  overflow: visible;
+  position: relative;
 }
 
-.fill {
+.milestoneFill {
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--color-blue-soft), var(--color-purple-muted));
-  transition: width 0.6s ease-out;
+  background: linear-gradient(90deg, #4CAF50, #66BB6A);
+  transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  box-shadow: 0 0 20px rgba(76, 175, 80, 0.2);
 }
 
-.milestoneHint {
+.milestoneFillAnimated {
+  animation: fillPulse 2s ease-in-out infinite;
+}
+
+@keyframes fillPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(76, 175, 80, 0.2); }
+  50% { box-shadow: 0 0 40px rgba(76, 175, 80, 0.4); }
+}
+
+.milestoneFillGlow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: glowSweep 2s ease-in-out infinite;
+}
+
+@keyframes glowSweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.milestoneGlowTrail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(76, 175, 80, 0.1), transparent);
+  filter: blur(8px);
+  pointer-events: none;
+  transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.milestoneFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.milestoneMessage {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 12px;
-  color: var(--text-muted);
-  margin: 0;
+  color: #8a8b9e;
+  font-weight: 500;
 }
 
-.emptyState {
-  background: var(--bg-card);
-  border: 1px dashed var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: 32px 20px;
-  text-align: center;
+.milestoneMessage svg {
+  color: #FFD700;
+}
+
+.milestonePercent {
+  font-size: 14px;
+  font-weight: 700;
+  color: #4CAF50;
+}
+
+/* Milestone Markers */
+.milestoneMarkers {
+  position: relative;
+  height: 24px;
+  margin-top: 6px;
+  width: 100%;
+}
+
+.marker {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 2px;
 }
 
-.emptyIcon {
-  color: var(--text-muted);
-  margin-bottom: 6px;
+.markerDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.5s ease;
 }
 
-.emptyTitle {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin: 0;
+.markerLabel {
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.2);
+  white-space: nowrap;
 }
 
-.emptyText {
-  font-size: 13px;
-  color: var(--text-secondary);
-  margin: 0 0 10px;
-  max-width: 320px;
+.markerFinal .markerDot {
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 215, 0, 0.2);
 }
 
-.emptyCta {
-  background: none;
+.markerFinal .markerLabel svg {
+  color: #FFD700;
+}
+
+/* Refer Action Button */
+.referActionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #4CAF50, #66BB6A);
   border: none;
-  color: var(--color-gold-soft);
-  font-size: 13px;
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  justify-content: center;
 }
 
-.emptyCta:hover {
-  text-decoration: underline;
+.referActionBtn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 30px rgba(76, 175, 80, 0.3);
 }
 
-@media (max-width: 600px) {
+.referActionBtn:active {
+  transform: scale(0.97);
+}
+
+.referActionBtn svg:last-child {
+  transition: transform 0.3s ease;
+}
+
+.referActionBtn:hover svg:last-child {
+  transform: translateX(4px);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .statsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 20px;
+  }
+
   .statsGrid {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 10px;
+  }
+
+  .statCard {
+    padding: 14px;
+  }
+
+  .statValue {
+    font-size: 18px;
+  }
+
+  .codeValue {
+    font-size: 16px;
+  }
+
+  .header {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .viewAllBtn {
+    margin-left: auto;
+  }
+
+  .milestoneMarkers {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .headerBadge {
+    display: none;
+  }
+
+  .headerIcon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .viewAllBtn {
+    margin-left: 0;
+    padding: 2px 8px;
+    font-size: 11px;
+  }
+
+  .referralCodeCard {
+    padding: 14px 16px;
+  }
+
+  .codeWrapper {
+    flex-wrap: wrap;
+  }
+
+  .codeValue {
+    font-size: 14px;
+    padding: 2px 10px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .copyBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .statCard {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .statValue {
+    font-size: 16px;
+  }
+
+  .statIconWrapper {
+    width: 34px;
+    height: 34px;
+  }
+
+  .statIconWrapper svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .statTrend {
+    display: none;
+  }
+
+  .statBadge {
+    font-size: 9px;
+    padding: 1px 8px 1px 6px;
+  }
+
+  .milestoneCard {
+    padding: 14px 16px;
+  }
+
+  .milestoneCount {
+    font-size: 12px;
+  }
+
+  .milestoneMessage {
+    font-size: 11px;
+  }
+
+  .milestonePercent {
+    font-size: 12px;
+  }
+
+  .milestoneMarkers {
+    display: none;
+  }
+
+  .referActionBtn {
+    padding: 10px 18px;
+    font-size: 13px;
   }
 }
