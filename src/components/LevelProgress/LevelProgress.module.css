@@ -1,79 +1,525 @@
+/* src/components/LevelProgress/LevelProgress.module.css */
+
 .card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: 22px;
-  box-shadow: var(--shadow-card);
+  position: relative;
+  background: linear-gradient(145deg, #1a1b2e, #252640);
+  border: 1px solid rgba(255, 215, 0, 0.06);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+.cardVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #FFD700, #FF6B00, #FFD700);
+  opacity: 0.5;
+  animation: borderShimmer 3s ease-in-out infinite;
+}
+
+@keyframes borderShimmer {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.cardGlow {
+  position: absolute;
+  top: -30%;
+  right: -10%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.03), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: glowFloat 6s ease-in-out infinite;
+}
+
+@keyframes glowFloat {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(-20px, 20px) scale(1.1);
+  }
+  66% {
+    transform: translate(20px, -20px) scale(0.9);
+  }
+}
+
+/* Header */
 .header {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 18px;
+  gap: 16px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .badge {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.12), rgba(255, 107, 0, 0.04));
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(212, 175, 55, 0.14);
-  color: var(--color-gold-soft);
+  color: #FFD700;
   flex-shrink: 0;
+  border: 1px solid rgba(255, 215, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.card:hover .badge {
+  transform: scale(1.05) rotate(-5deg);
+}
+
+.badgeGlow {
+  position: absolute;
+  inset: -2px;
+  border-radius: 16px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.1), transparent 70%);
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+.headerContent {
+  flex: 1;
 }
 
 .levelLabel {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  color: var(--color-gold-soft);
-  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 2px;
+}
+
+.levelPrefix {
+  font-size: 11px;
+  font-weight: 600;
+  color: #8a8b9e;
+  letter-spacing: 0.05em;
+}
+
+.levelNumber {
+  font-size: 20px;
+  font-weight: 800;
+  color: #FFD700;
+  letter-spacing: 0.02em;
 }
 
 .levelName {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin: 2px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #c0c1d0;
+  margin: 0;
 }
 
+.levelBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #FFD700;
+  background: rgba(255, 215, 0, 0.08);
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 215, 0, 0.08);
+  flex-shrink: 0;
+}
+
+.levelBadge svg {
+  color: #FFD700;
+}
+
+/* Progress Block */
 .progressBlock {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  position: relative;
+  z-index: 1;
 }
 
 .progressLabelRow {
   display: flex;
   justify-content: space-between;
-  font-size: 13px;
-  color: var(--text-secondary);
+  align-items: center;
+  margin-bottom: 8px;
 }
 
-.percent {
-  color: var(--color-gold-soft);
-  font-weight: 600;
+.xpLabelWrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.xpIcon {
+  color: #FFD700;
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.xpLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: #8a8b9e;
+}
+
+.xpValues {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.xpCurrent {
+  font-size: 15px;
+  font-weight: 700;
+  color: #e0e1f0;
+}
+
+.xpDivider {
+  font-size: 13px;
+  color: #4a4b5e;
+}
+
+.xpMax {
+  font-size: 13px;
+  font-weight: 500;
+  color: #8a8b9e;
+}
+
+/* Track */
+.trackWrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .track {
-  height: 10px;
+  flex: 1;
+  height: 8px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+  overflow: visible;
+  position: relative;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .fill {
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--color-gold-soft), var(--color-gold));
-  transition: width 0.6s ease-out;
+  background: linear-gradient(90deg, #FFD700, #FF6B00);
+  transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+}
+
+.fillAnimated {
+  animation: fillPulse 2s ease-in-out infinite;
+}
+
+@keyframes fillPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+  }
+}
+
+.fillGlow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.15), transparent);
+  animation: glowSweep 2s ease-in-out infinite;
+}
+
+@keyframes glowSweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.fillSparkle {
+  position: absolute;
+  right: -3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.4), transparent);
+  border-radius: 50%;
+  animation: sparklePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes sparklePulse {
+  0%, 100% {
+    transform: translateY(-50%) scale(0.5);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-50%) scale(1.5);
+    opacity: 1;
+  }
+}
+
+.fillTrail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 215, 0, 0.08), transparent);
+  filter: blur(8px);
+  pointer-events: none;
+  transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.percent {
+  font-size: 16px;
+  font-weight: 700;
+  color: #FFD700;
+  min-width: 48px;
+  text-align: right;
+}
+
+/* Milestones */
+.milestones {
+  position: relative;
+  height: 20px;
+  margin-top: 4px;
+  width: 100%;
+}
+
+.milestone {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.milestoneDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  transition: all 0.5s ease;
+}
+
+.milestoneActive .milestoneDot {
+  background: #FFD700;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
+}
+
+.milestoneLabel {
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.15);
+  white-space: nowrap;
+}
+
+.milestoneActive .milestoneLabel {
+  color: rgba(255, 215, 0, 0.5);
+}
+
+/* Progress Footer */
+.progressFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
 }
 
 .toNext {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 12px;
-  color: var(--text-muted);
-  margin: 2px 0 0;
+  color: #8a8b9e;
+}
+
+.toNext strong {
+  color: #e0e1f0;
+  font-weight: 700;
+}
+
+.zapIcon {
+  color: #FFD700;
+  animation: zapPulse 1s ease-in-out infinite;
+}
+
+@keyframes zapPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+}
+
+.progressMessage {
+  font-size: 12px;
+  font-weight: 600;
+  color: #FFD700;
+  background: rgba(255, 215, 0, 0.06);
+  padding: 2px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 215, 0, 0.06);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card {
+    padding: 20px;
+  }
+
+  .levelNumber {
+    font-size: 18px;
+  }
+
+  .badge {
+    width: 42px;
+    height: 42px;
+  }
+
+  .badge svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .levelBadge {
+    font-size: 10px;
+    padding: 2px 10px;
+  }
+
+  .xpCurrent {
+    font-size: 14px;
+  }
+
+  .milestones {
+    display: none;
+  }
+
+  .progressFooter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+  }
+
+  .badge svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .levelPrefix {
+    font-size: 10px;
+  }
+
+  .levelNumber {
+    font-size: 16px;
+  }
+
+  .levelName {
+    font-size: 12px;
+  }
+
+  .levelBadge {
+    font-size: 9px;
+    padding: 2px 8px;
+  }
+
+  .xpLabel {
+    font-size: 11px;
+  }
+
+  .xpCurrent {
+    font-size: 13px;
+  }
+
+  .xpMax {
+    font-size: 12px;
+  }
+
+  .track {
+    height: 6px;
+  }
+
+  .percent {
+    font-size: 14px;
+    min-width: 40px;
+  }
+
+  .toNext {
+    font-size: 11px;
+  }
+
+  .progressMessage {
+    font-size: 11px;
+    padding: 2px 10px;
+  }
+
+  .milestones {
+    display: none;
+  }
 }
