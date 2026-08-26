@@ -1,27 +1,149 @@
+/* src/components/ProfileHero/ProfileHero.module.css */
+
 .hero {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 24px;
-  background: linear-gradient(135deg, var(--bg-card), var(--bg-card-elevated));
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: 28px;
-  box-shadow: var(--shadow-card);
+  gap: 28px;
+  background: linear-gradient(145deg, #1a1b2e, #252640);
+  border: 1px solid rgba(255, 215, 0, 0.15);
+  border-radius: 20px;
+  padding: 32px;
+  overflow: hidden;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 60px rgba(255, 215, 0, 0.03);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  transform: translateY(30px);
 }
 
+.heroVisible {
+  opacity: 1;
+  transform: translateY(0);
+  animation: heroAppear 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes heroAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Hero Glow */
+.heroGlow {
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.06), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Floating Particles */
+.particlesContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  animation: floatParticle 10s ease-in-out infinite;
+  opacity: 0.4;
+}
+
+@keyframes floatParticle {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.2;
+  }
+  25% {
+    transform: translate(20px, -30px) scale(1.2);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-10px, -50px) scale(0.8);
+    opacity: 0.4;
+  }
+  75% {
+    transform: translate(15px, -20px) scale(1.1);
+    opacity: 0.5;
+  }
+}
+
+/* Avatar */
 .avatarWrap {
+  position: relative;
   flex-shrink: 0;
 }
 
+.avatarPulse {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFD700, #FF6B00, #FF1493);
+  opacity: 0.3;
+  animation: avatarPulse 2s ease-in-out infinite;
+  filter: blur(12px);
+}
+
+@keyframes avatarPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.6;
+  }
+}
+
 .avatarImg {
+  position: relative;
   width: 88px;
   height: 88px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid var(--color-gold-soft);
+  border: 3px solid rgba(255, 215, 0, 0.4);
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.15);
+  transition: all 0.4s ease;
+  z-index: 1;
+}
+
+.avatarImg:hover {
+  transform: scale(1.05);
+  border-color: #FFD700;
+  box-shadow: 0 0 60px rgba(255, 215, 0, 0.3);
 }
 
 .avatarFallback {
+  position: relative;
   width: 88px;
   height: 88px;
   border-radius: 50%;
@@ -30,10 +152,136 @@
   justify-content: center;
   font-size: 28px;
   font-weight: 700;
-  color: var(--bg-app);
-  background: linear-gradient(135deg, var(--color-gold-soft), var(--color-gold));
+  color: #161827;
+  background: linear-gradient(135deg, #FFD700, #FF6B00);
+  border: 3px solid rgba(255, 215, 0, 0.4);
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.2);
+  transition: all 0.4s ease;
+  z-index: 1;
+  overflow: hidden;
 }
 
+.avatarFallback:hover {
+  transform: scale(1.05) rotate(-5deg);
+  box-shadow: 0 0 60px rgba(255, 215, 0, 0.4);
+}
+
+.avatarShine {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 70%
+  );
+  animation: shine 3s ease-in-out infinite;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) rotate(45deg);
+  }
+}
+
+/* Level Ring */
+.levelRing {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 108px;
+  height: 108px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.ringSvg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ringProgress {
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.levelBadgeRing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(22, 24, 39, 0.95);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 215, 0, 0.2);
+  backdrop-filter: blur(4px);
+}
+
+.levelNumber {
+  font-size: 18px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FFD700, #FF6B00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Status Badge */
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4CAF7D;
+  background: rgba(76, 175, 125, 0.12);
+  padding: 4px 14px 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(76, 175, 125, 0.2);
+  animation: statusPulse 2s ease-in-out infinite;
+  position: relative;
+}
+
+@keyframes statusPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(76, 175, 125, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(76, 175, 125, 0.1);
+  }
+}
+
+.statusDot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: #4CAF7D;
+  border-radius: 50%;
+  animation: dotPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.6);
+  }
+}
+
+/* Info Section */
 .info {
   flex: 1;
   min-width: 0;
@@ -42,79 +290,572 @@
 .nameRow {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   flex-wrap: wrap;
 }
 
-.name {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin: 0;
+.nameWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
-.statusPill {
-  display: inline-flex;
+.name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 24px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.sparkleIcon {
+  color: #FFD700;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.8) rotate(180deg);
+  }
+}
+
+.userTitle {
+  display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--color-success);
-  background: rgba(76, 175, 125, 0.12);
-  padding: 4px 10px;
-  border-radius: 999px;
-}
-
-.levelBadge {
-  margin-top: 6px;
   font-size: 13px;
-  font-weight: 600;
-  color: var(--color-gold-soft);
-  letter-spacing: 0.02em;
+  color: #8a8b9e;
+  font-weight: 500;
 }
 
+.trophyIcon {
+  color: #FFD700;
+  animation: trophyFloat 2s ease-in-out infinite;
+}
+
+@keyframes trophyFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+/* Level Badge */
+.levelBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  padding: 6px 16px 6px 12px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.12), rgba(255, 107, 0, 0.08));
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #FFD700;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.levelBadge:hover {
+  transform: scale(1.02);
+  border-color: rgba(255, 215, 0, 0.4);
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
+}
+
+.crownIcon {
+  color: #FFD700;
+  animation: crownBounce 2s ease-in-out infinite;
+}
+
+@keyframes crownBounce {
+  0%, 100% {
+    transform: translateY(0) rotate(-5deg);
+  }
+  50% {
+    transform: translateY(-3px) rotate(5deg);
+  }
+}
+
+.levelBadgeGlow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.05), transparent);
+  animation: glowSweep 3s ease-in-out infinite;
+}
+
+@keyframes glowSweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* XP Block */
 .xpBlock {
-  margin-top: 14px;
+  margin-top: 16px;
 }
 
 .xpLabelRow {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: 13px;
-  color: var(--text-secondary);
-  margin-bottom: 6px;
+  color: #8a8b9e;
+  margin-bottom: 8px;
 }
 
-.xpPercent {
-  color: var(--color-gold-soft);
+.xpLabelWrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.xpIcon {
+  color: #FF6B00;
+  animation: flameFlicker 1.5s ease-in-out infinite;
+}
+
+@keyframes flameFlicker {
+  0%, 100% {
+    transform: scale(1) rotate(-5deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(5deg);
+  }
+}
+
+.xpValues {
   font-weight: 600;
 }
 
+.xpCurrent {
+  color: #FFD700;
+  font-size: 15px;
+}
+
+.xpDivider {
+  color: #4a4b5e;
+  margin: 0 4px;
+}
+
+.xpMax {
+  color: #8a8b9e;
+  font-size: 13px;
+}
+
+/* XP Track */
+.xpTrackWrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+
 .xpTrack {
-  height: 8px;
+  flex: 1;
+  height: 10px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.06);
-  overflow: hidden;
+  overflow: visible;
+  position: relative;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .xpFill {
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--color-gold-soft), var(--color-gold));
-  transition: width 0.6s ease-out;
+  background: linear-gradient(90deg, #FFD700, #FF6B00, #FF1493);
+  transition: width 1.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+  overflow: visible;
 }
 
+.xpFillAnimated {
+  animation: xpPulse 2s ease-in-out infinite;
+}
+
+@keyframes xpPulse {
+  0%, 100% {
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 60px rgba(255, 215, 0, 0.6), 0 0 90px rgba(255, 107, 0, 0.3);
+  }
+}
+
+.xpFillGlow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: glowSweep 2s ease-in-out infinite;
+}
+
+/* Bar Ripple Effect */
+.barRipple {
+  position: absolute;
+  right: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(255, 215, 0, 0.4);
+  animation: ripple 1.5s ease-out infinite;
+}
+
+@keyframes ripple {
+  0% {
+    transform: translateY(-50%) scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-50%) scale(2);
+    opacity: 0;
+  }
+}
+
+/* Bar Sparkles */
+.barSparkles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.barSparkle {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+  animation: sparkleFloat 2s ease-in-out infinite;
+}
+
+@keyframes sparkleFloat {
+  0%, 100% {
+    opacity: 0;
+    transform: translateY(-50%) scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.5);
+  }
+}
+
+/* XP Glow Trail */
+.xpGlowTrail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), transparent);
+  filter: blur(8px);
+  pointer-events: none;
+  transition: width 1.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.xpPercent {
+  font-size: 14px;
+  font-weight: 700;
+  color: #FFD700;
+  min-width: 44px;
+  text-align: right;
+  animation: percentPulse 2s ease-in-out infinite;
+}
+
+@keyframes percentPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+/* Milestones */
+.milestones {
+  position: relative;
+  height: 20px;
+  margin-top: 4px;
+  width: 100%;
+}
+
+.milestone {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.milestoneDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.5s ease;
+}
+
+.milestoneFinal .milestoneDot {
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 215, 0, 0.2);
+}
+
+.milestoneLabel {
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.2);
+  white-space: nowrap;
+}
+
+/* XP To Next */
 .xpToNext {
-  margin: 8px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0 0;
   font-size: 12px;
-  color: var(--text-muted);
+  color: #8a8b9e;
+  font-weight: 500;
+  flex-wrap: wrap;
+}
+
+.zapIcon {
+  color: #FFD700;
+  animation: zapPulse 1s ease-in-out infinite;
+}
+
+@keyframes zapPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+}
+
+.xpProgressText {
+  color: #FFD700;
+  font-weight: 600;
+  margin-left: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Progress Dots */
+.progressDots {
+  display: inline-flex;
+  gap: 4px;
+  margin-left: 8px;
+}
+
+.progressDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: all 0.5s ease;
+  animation: dotAppear 0.5s ease backwards;
+}
+
+.progressDotActive {
+  background: #FFD700;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+  animation: dotPulseActive 1s ease-in-out infinite;
+}
+
+@keyframes dotAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes dotPulseActive {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.7;
+  }
+}
+
+/* Confetti */
+.confettiContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  top: -10px;
+  animation: confettiFall linear infinite;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(400px) rotate(720deg) scale(0);
+    opacity: 0;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px;
+    gap: 20px;
+  }
+
+  .avatarImg,
+  .avatarFallback {
+    width: 72px;
+    height: 72px;
+    font-size: 22px;
+  }
+
+  .levelRing {
+    width: 92px;
+    height: 92px;
+    top: -8px;
+    left: -8px;
+  }
+
+  .levelBadgeRing {
+    width: 40px;
+    height: 40px;
+  }
+
+  .levelNumber {
+    font-size: 15px;
+  }
+
+  .name {
+    font-size: 20px;
+  }
+
+  .nameRow {
+    gap: 10px;
+  }
+
+  .xpTrackWrapper {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .xpPercent {
+    text-align: left;
+  }
+
+  .milestones {
+    display: none;
+  }
 }
 
 @media (max-width: 480px) {
   .hero {
+    padding: 18px;
+    gap: 16px;
+    border-radius: 16px;
+  }
+
+  .avatarImg,
+  .avatarFallback {
+    width: 60px;
+    height: 60px;
+    font-size: 18px;
+  }
+
+  .levelRing {
+    width: 80px;
+    height: 80px;
+    top: -6px;
+    left: -6px;
+  }
+
+  .levelBadgeRing {
+    width: 34px;
+    height: 34px;
+  }
+
+  .levelNumber {
+    font-size: 13px;
+  }
+
+  .name {
+    font-size: 18px;
+  }
+
+  .xpLabelRow {
+    font-size: 12px;
     flex-direction: column;
     align-items: flex-start;
-    text-align: left;
-    padding: 20px;
+    gap: 4px;
+  }
+
+  .statusPill {
+    font-size: 11px;
+    padding: 2px 10px 2px 8px;
+  }
+
+  .levelBadge {
+    font-size: 12px;
+    padding: 4px 12px 4px 10px;
+  }
+
+  .xpToNext {
+    font-size: 11px;
+  }
+
+  .progressDots {
+    display: none;
   }
 }
