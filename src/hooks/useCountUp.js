@@ -1,23 +1,52 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect, useRef } from 'react';
 
-export function useCountUp(target, duration = 900) {
-  const [value, setValue] = useState(0);
+export const useCountUp = (targetValue, duration = 1000, startValue = 0) => {
+  const [currentValue, setCurrentValue] = useState(startValue);
+  const [isComplete, setIsComplete] = useState(false);
+  const animationRef = useRef(null);
+  const startTimeRef = useRef(null);
 
   useEffect(() => {
-    let startTime = null;
-    let frameId;
+    if (targetValue === undefined || targetValue === null) {
+      setCurrentValue(0);
+      setIsComplete(true);
+      return;
+    }
 
-    const step = (timestamp) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
-      setValue(Math.round(eased * target));
-      if (progress < 1) frameId = requestAnimationFrame(step);
+    // Reset state when target changes
+    setCurrentValue(startValue);
+    setIsComplete(false);
+    startTimeRef.current = null;
+
+    const animate = (timestamp) => {
+      if (!startTimeRef.current) {
+        startTimeRef.current = timestamp;
+      }
+
+      const progress = Math.min((timestamp - startTimeRef.current) / duration, 1);
+      
+      // Ease out cubic function for smooth animation
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(startValue + (targetValue - startValue) * eased);
+      
+      setCurrentValue(current);
+
+      if (progress < 1) {
+        animationRef.current = requestAnimationFrame(animate);
+      } else {
+        setCurrentValue(targetValue);
+        setIsComplete(true);
+      }
     };
 
-    frameId = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(frameId);
-  }, [target, duration]);
+    animationRef.current = requestAnimationFrame(animate);
 
-  return value;
-}
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [targetValue, duration, startValue]);
+
+  return currentValue;
+};
