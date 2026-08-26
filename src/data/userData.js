@@ -7,4 +7,7 @@ export const userData = {
   accountStatus: "active", // "active" | "inactive"
   emailVerified: true,
   avatarUrl: null, // fallback to initials if null
+  loginSecurity: true,
+  level: 4,
+  levelName: "Reward Explorer",
 };
