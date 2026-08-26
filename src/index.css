@@ -1,7 +1,11 @@
 /* ============================================
-   GLOBAL STYLES — VELOOP Rewards Profile
+   INDEX.CSS — VELOOP Rewards Profile
    ============================================ */
 
+/* ===== Import Google Font ===== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ===== Reset & Base ===== */
 * {
   margin: 0;
   padding: 0;
@@ -15,12 +19,13 @@
   --bg-card-hover: #22223A;
   --bg-card-border: #2A2A44;
   
-  --text-primary: #FFFFFF;
+  --text-primary: #E8E9F0;
   --text-secondary: #94A3B8;
   --text-muted: #64748B;
   
   --gold: #FFD700;
   --gold-dark: #D4A800;
+  --gold-glow: rgba(255, 215, 0, 0.15);
   --warm-yellow: #FBBF24;
   --soft-blue: #60A5FA;
   --muted-purple: #8B5CF6;
@@ -50,13 +55,17 @@
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 12px 48px rgba(0, 0, 0, 0.5);
   --shadow-glow: 0 0 30px rgba(255, 215, 0, 0.05);
+  --shadow-glow-strong: 0 0 60px rgba(255, 215, 0, 0.08);
   
   /* ===== Transitions ===== */
   --transition-fast: 150ms ease;
   --transition-base: 300ms ease;
   --transition-slow: 500ms ease;
-    /* ===== Compatibility bridge (used by component CSS Modules) ===== */
+  --transition-bounce: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  
+  /* ===== Compatibility bridge ===== */
   --bg-app: var(--bg-primary);
   --bg-card-elevated: var(--bg-card-hover);
   --border-subtle: var(--bg-card-border);
@@ -73,18 +82,11 @@
   --shadow-card: var(--shadow-md);
   --shadow-card-hover: var(--shadow-lg);
 }
-/* ===== Reduced Motion (Accessibility) ===== */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
 
 html {
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -92,8 +94,85 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== Animated Background ===== */
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.02) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(255, 107, 0, 0.015) 0%, transparent 35%),
+    radial-gradient(circle at 50% 50%, rgba(124, 77, 255, 0.01) 0%, transparent 30%);
+  animation: bgFloat 25s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes bgFloat {
+  0%, 100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  25% {
+    transform: translate(50px, -30px) scale(1.05) rotate(3deg);
+  }
+  50% {
+    transform: translate(-30px, 50px) scale(0.95) rotate(-3deg);
+  }
+  75% {
+    transform: translate(40px, 20px) scale(1.02) rotate(2deg);
+  }
+}
+
+/* ===== Floating Particles Background ===== */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(2px 2px at 10% 20%, rgba(255, 215, 0, 0.06), transparent),
+    radial-gradient(2px 2px at 30% 60%, rgba(255, 215, 0, 0.04), transparent),
+    radial-gradient(2px 2px at 50% 10%, rgba(255, 215, 0, 0.08), transparent),
+    radial-gradient(2px 2px at 70% 80%, rgba(255, 215, 0, 0.03), transparent),
+    radial-gradient(2px 2px at 90% 40%, rgba(255, 215, 0, 0.06), transparent),
+    radial-gradient(2px 2px at 15% 90%, rgba(255, 215, 0, 0.05), transparent),
+    radial-gradient(2px 2px at 85% 15%, rgba(255, 215, 0, 0.04), transparent),
+    radial-gradient(2px 2px at 45% 45%, rgba(255, 215, 0, 0.07), transparent);
+  background-size: 300px 300px;
+  pointer-events: none;
+  z-index: 0;
+  animation: particleFloat 30s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-50px, 30px);
+  }
+  50% {
+    transform: translate(50px, -30px);
+  }
+  75% {
+    transform: translate(-30px, -50px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
 }
 
 /* ===== Scrollbar ===== */
@@ -107,12 +186,14 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--bg-card-border);
+  background: linear-gradient(180deg, var(--gold), var(--gold-dark));
   border-radius: 10px;
+  transition: all 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--gold);
+  background: linear-gradient(180deg, var(--warm-yellow), var(--gold));
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
 }
 
 /* ===== Selection ===== */
@@ -128,7 +209,10 @@ body {
   border-radius: 4px;
 }
 
-/* ===== Utility Classes ===== */
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
 .text-gold {
   color: var(--gold);
 }
@@ -157,7 +241,10 @@ body {
   background: var(--bg-card);
 }
 
-/* ===== Animations ===== */
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -169,7 +256,27 @@ body {
   }
 }
 
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes shimmerGold {
   0% {
     background-position: -200% 0;
   }
@@ -209,6 +316,15 @@ body {
   }
 }
 
+@keyframes pulseGlowStrong {
+  0%, 100% {
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.05);
+  }
+  50% {
+    box-shadow: 0 0 60px rgba(255, 215, 0, 0.15);
+  }
+}
+
 @keyframes slideInBottom {
   from {
     opacity: 0;
@@ -220,20 +336,158 @@ body {
   }
 }
 
-/* ===== Responsive Typography ===== */
-@media (max-width: 768px) {
-  html {
-    font-size: 15px;
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
-@media (max-width: 480px) {
-  html {
-    font-size: 14px;
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
-/* ===== Toast Container ===== */
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  60% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes rotateSlow {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================
+   ANIMATION CLASSES
+   ============================================ */
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-fadeInScale {
+  animation: fadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-bounceIn {
+  animation: bounceIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-sparkle {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.animate-pulseGlow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.shimmer-gold {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 215, 0, 0.05) 0%,
+    rgba(255, 215, 0, 0.15) 25%,
+    rgba(255, 215, 0, 0.05) 50%,
+    rgba(255, 215, 0, 0.15) 75%,
+    rgba(255, 215, 0, 0.05) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmerGold 2.5s ease-in-out infinite;
+}
+
+/* ============================================
+   GLASSMORPHIC CARDS
+   ============================================ */
+
+.glass-card {
+  background: rgba(26, 27, 46, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 215, 0, 0.05);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 215, 0, 0.1);
+  box-shadow: var(--shadow-glow-strong);
+}
+
+/* ============================================
+   GLOW BORDER
+   ============================================ */
+
+.glow-border {
+  position: relative;
+}
+
+.glow-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--gold), transparent, var(--gold));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.glow-border:hover::before {
+  opacity: 0.3;
+}
+
+/* ============================================
+   TOAST CONTAINER
+   ============================================ */
+
 .toast-container {
   position: fixed;
   bottom: 24px;
@@ -246,11 +500,93 @@ body {
   width: 100%;
 }
 
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toastOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+}
+
+.toast-enter {
+  animation: toastIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.toast-exit {
+  animation: toastOut 0.3s ease forwards;
+}
+
+/* ============================================
+   LOADING SHIMMER
+   ============================================ */
+
+.shimmer-loading {
+  background: linear-gradient(
+    90deg,
+    var(--bg-card) 0%,
+    var(--bg-card-hover) 25%,
+    var(--bg-card) 50%,
+    var(--bg-card-hover) 75%,
+    var(--bg-card) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+
+/* ============================================
+   RESPONSIVE TYPOGRAPHY
+   ============================================ */
+
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+/* ============================================
+   TOAST RESPONSIVE
+   ============================================ */
+
 @media (max-width: 480px) {
   .toast-container {
     bottom: 16px;
     right: 16px;
     left: 16px;
     max-width: 100%;
+  }
+}
+
+/* ============================================
+   REDUCED MOTION (Accessibility)
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
