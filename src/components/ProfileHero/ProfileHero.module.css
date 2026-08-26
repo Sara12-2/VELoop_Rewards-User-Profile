@@ -4,31 +4,137 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 28px;
-  background: linear-gradient(145deg, #1a1b2e, #252640);
+  gap: 32px;
+  background: 
+    /* Lighter Overlay for better readability */
+    linear-gradient(145deg, rgba(26, 27, 46, 0.60), rgba(37, 38, 64, 0.55)),
+    /* Background Image */
+    url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: overlay;
   border: 1px solid rgba(255, 215, 0, 0.15);
-  border-radius: 20px;
-  padding: 32px;
+  border-radius: 24px;
+  padding: 36px 40px;
   overflow: hidden;
   box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 0 60px rgba(255, 215, 0, 0.03);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    0 8px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 80px rgba(255, 215, 0, 0.03);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(40px) scale(0.98);
+  min-height: 200px;
+}
+
+/* ============================================
+   ANIMATED BORDER GLOW
+   ============================================ */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 26px;
+  padding: 2px;
+  background: linear-gradient(
+    135deg, 
+    rgba(255, 215, 0, 0.4), 
+    rgba(255, 107, 0, 0.15), 
+    rgba(255, 215, 0, 0.4),
+    rgba(255, 20, 147, 0.15),
+    rgba(255, 215, 0, 0.4)
+  );
+  background-size: 300% 300%;
+  animation: borderGlow 4s ease-in-out infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    background-position: 0% 50%;
+    opacity: 0.6;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   BACKGROUND ANIMATED ORBS
+   ============================================ */
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.10), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: orbFloat1 8s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes orbFloat1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.5;
+  }
+  33% {
+    transform: translate(-40px, 30px) scale(1.2);
+    opacity: 0.9;
+  }
+  66% {
+    transform: translate(40px, -20px) scale(0.8);
+    opacity: 0.6;
+  }
+}
+
+/* Second Orb */
+.hero .orb2 {
+  position: absolute;
+  bottom: -20%;
+  left: -5%;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(124, 77, 255, 0.08), rgba(0, 188, 212, 0.04), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: orbFloat2 10s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes orbFloat2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translate(50px, -40px) scale(1.3);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translate(-30px, 50px) scale(0.7);
+    opacity: 0.5;
+  }
 }
 
 .heroVisible {
   opacity: 1;
-  transform: translateY(0);
-  animation: heroAppear 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  transform: translateY(0) scale(1);
+  animation: heroAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 @keyframes heroAppear {
   0% {
     opacity: 0;
-    transform: translateY(30px) scale(0.98);
+    transform: translateY(40px) scale(0.96);
   }
   100% {
     opacity: 1;
@@ -36,134 +142,167 @@
   }
 }
 
-/* Hero Glow */
-.heroGlow {
-  position: absolute;
-  top: -50%;
-  right: -20%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(255, 215, 0, 0.06), transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  animation: glowPulse 4s ease-in-out infinite;
-}
-
-@keyframes glowPulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.5;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 1;
-  }
-}
-
-/* Floating Particles */
+/* ============================================
+   FLOATING SPARKLE PARTICLES
+   ============================================ */
 .particlesContainer {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   pointer-events: none;
   overflow: hidden;
+  z-index: 0;
 }
 
 .particle {
   position: absolute;
   border-radius: 50%;
-  animation: floatParticle 10s ease-in-out infinite;
-  opacity: 0.4;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.7), transparent);
+  animation: floatParticle 8s ease-in-out infinite;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.25);
+}
+
+.particle:nth-child(1) {
+  width: 8px;
+  height: 8px;
+  top: 15%;
+  left: 10%;
+  animation-delay: 0s;
+  animation-duration: 6s;
+}
+.particle:nth-child(2) {
+  width: 5px;
+  height: 5px;
+  top: 25%;
+  right: 15%;
+  animation-delay: 1s;
+  animation-duration: 8s;
+}
+.particle:nth-child(3) {
+  width: 10px;
+  height: 10px;
+  bottom: 20%;
+  left: 20%;
+  animation-delay: 2s;
+  animation-duration: 7s;
+}
+.particle:nth-child(4) {
+  width: 4px;
+  height: 4px;
+  bottom: 30%;
+  right: 25%;
+  animation-delay: 0.5s;
+  animation-duration: 9s;
+}
+.particle:nth-child(5) {
+  width: 6px;
+  height: 6px;
+  top: 50%;
+  left: 50%;
+  animation-delay: 1.5s;
+  animation-duration: 5s;
+}
+.particle:nth-child(6) {
+  width: 7px;
+  height: 7px;
+  top: 70%;
+  right: 10%;
+  animation-delay: 2.5s;
+  animation-duration: 7.5s;
+}
+.particle:nth-child(7) {
+  width: 4px;
+  height: 4px;
+  top: 10%;
+  left: 40%;
+  animation-delay: 0.8s;
+  animation-duration: 6.5s;
+}
+.particle:nth-child(8) {
+  width: 6px;
+  height: 6px;
+  bottom: 15%;
+  left: 60%;
+  animation-delay: 1.8s;
+  animation-duration: 8.5s;
 }
 
 @keyframes floatParticle {
   0%, 100% {
     transform: translate(0, 0) scale(1);
-    opacity: 0.2;
+    opacity: 0.15;
   }
   25% {
-    transform: translate(20px, -30px) scale(1.2);
-    opacity: 0.6;
+    transform: translate(25px, -35px) scale(1.5);
+    opacity: 0.8;
   }
   50% {
-    transform: translate(-10px, -50px) scale(0.8);
+    transform: translate(-15px, -55px) scale(0.7);
     opacity: 0.4;
   }
   75% {
-    transform: translate(15px, -20px) scale(1.1);
-    opacity: 0.5;
+    transform: translate(20px, -25px) scale(1.2);
+    opacity: 0.6;
   }
 }
 
-/* Avatar */
+/* ============================================
+   AVATAR
+   ============================================ */
 .avatarWrap {
   position: relative;
   flex-shrink: 0;
+  z-index: 1;
 }
 
 .avatarPulse {
   position: absolute;
-  inset: -8px;
+  inset: -12px;
   border-radius: 50%;
   background: linear-gradient(135deg, #FFD700, #FF6B00, #FF1493);
   opacity: 0.3;
-  animation: avatarPulse 2s ease-in-out infinite;
-  filter: blur(12px);
+  animation: avatarPulse 2.5s ease-in-out infinite;
+  filter: blur(18px);
+  z-index: 0;
 }
 
 @keyframes avatarPulse {
   0%, 100% {
     transform: scale(1);
-    opacity: 0.3;
+    opacity: 0.25;
   }
   50% {
-    transform: scale(1.1);
+    transform: scale(1.2);
     opacity: 0.6;
   }
 }
 
-.avatarImg {
-  position: relative;
-  width: 88px;
-  height: 88px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid rgba(255, 215, 0, 0.4);
-  box-shadow: 0 0 40px rgba(255, 215, 0, 0.15);
-  transition: all 0.4s ease;
-  z-index: 1;
-}
-
-.avatarImg:hover {
-  transform: scale(1.05);
-  border-color: #FFD700;
-  box-shadow: 0 0 60px rgba(255, 215, 0, 0.3);
-}
-
 .avatarFallback {
   position: relative;
-  width: 88px;
-  height: 88px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
-  font-weight: 700;
+  font-size: 32px;
+  font-weight: 800;
   color: #161827;
-  background: linear-gradient(135deg, #FFD700, #FF6B00);
+  background: linear-gradient(135deg, #FFD700, #FF8C00);
   border: 3px solid rgba(255, 215, 0, 0.4);
-  box-shadow: 0 0 40px rgba(255, 215, 0, 0.2);
-  transition: all 0.4s ease;
+  box-shadow: 
+    0 0 50px rgba(255, 215, 0, 0.2),
+    inset 0 0 40px rgba(255, 215, 0, 0.1);
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   z-index: 1;
   overflow: hidden;
 }
 
 .avatarFallback:hover {
-  transform: scale(1.05) rotate(-5deg);
-  box-shadow: 0 0 60px rgba(255, 215, 0, 0.4);
+  transform: scale(1.08) rotate(-6deg);
+  border-color: #FFD700;
+  box-shadow: 
+    0 0 70px rgba(255, 215, 0, 0.35),
+    inset 0 0 60px rgba(255, 215, 0, 0.15);
 }
 
 .avatarShine {
@@ -175,7 +314,7 @@
   background: linear-gradient(
     45deg,
     transparent 30%,
-    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.18) 50%,
     transparent 70%
   );
   animation: shine 3s ease-in-out infinite;
@@ -190,13 +329,15 @@
   }
 }
 
-/* Level Ring */
+/* ============================================
+   LEVEL RING
+   ============================================ */
 .levelRing {
   position: absolute;
-  top: -10px;
-  left: -10px;
-  width: 108px;
-  height: 108px;
+  top: -12px;
+  left: -12px;
+  width: 124px;
+  height: 124px;
   z-index: 2;
   pointer-events: none;
 }
@@ -208,7 +349,8 @@
 }
 
 .ringProgress {
-  transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: stroke-dashoffset 1.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.25));
 }
 
 .levelBadgeRing {
@@ -216,58 +358,64 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(22, 24, 39, 0.95);
+  background: rgba(0, 0, 0, 0.75);
   border-radius: 50%;
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 2px solid rgba(255, 215, 0, 0.2);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.08);
 }
 
 .levelNumber {
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 20px;
+  font-weight: 900;
   background: linear-gradient(135deg, #FFD700, #FF6B00);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Status Badge */
+/* ============================================
+   STATUS BADGE - BRIGHT
+   ============================================ */
 .statusPill {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 12px;
+  gap: 8px;
+  font-size: 13px;
   font-weight: 600;
-  color: #4CAF7D;
-  background: rgba(76, 175, 125, 0.12);
-  padding: 4px 14px 4px 10px;
+  color: #81C784 !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+  padding: 6px 18px 6px 14px;
   border-radius: 999px;
-  border: 1px solid rgba(76, 175, 125, 0.2);
-  animation: statusPulse 2s ease-in-out infinite;
+  border: 1px solid rgba(76, 175, 125, 0.25);
+  backdrop-filter: blur(8px);
+  animation: statusPulse 2.5s ease-in-out infinite;
   position: relative;
+  z-index: 1;
 }
 
 @keyframes statusPulse {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(76, 175, 125, 0.2);
+    box-shadow: 0 0 0 0 rgba(76, 175, 125, 0.15);
   }
   50% {
-    box-shadow: 0 0 20px rgba(76, 175, 125, 0.1);
+    box-shadow: 0 0 30px rgba(76, 175, 125, 0.1);
   }
 }
 
 .statusDot {
   display: inline-block;
-  width: 6px;
-  height: 6px;
-  background: #4CAF7D;
+  width: 8px;
+  height: 8px;
+  background: #81C784;
   border-radius: 50%;
   animation: dotPulse 1.5s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(76, 175, 125, 0.3);
 }
 
 @keyframes dotPulse {
@@ -281,16 +429,20 @@
   }
 }
 
-/* Info Section */
+/* ============================================
+   INFO SECTION - ALL TEXT WHITE/GOLD
+   ============================================ */
 .info {
   flex: 1;
   min-width: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .nameRow {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
@@ -303,17 +455,18 @@
 .name {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 24px;
+  gap: 10px;
+  font-size: 28px;
   font-weight: 800;
-  color: #ffffff;
+  color: #ffffff !important;
   margin: 0;
   letter-spacing: -0.02em;
+  text-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
 }
 
 .sparkleIcon {
   color: #FFD700;
-  animation: sparkle 2s ease-in-out infinite;
+  animation: sparkle 2.5s ease-in-out infinite;
 }
 
 @keyframes sparkle {
@@ -322,77 +475,81 @@
     transform: scale(1) rotate(0deg);
   }
   50% {
-    opacity: 0.4;
-    transform: scale(0.8) rotate(180deg);
+    opacity: 0.3;
+    transform: scale(0.7) rotate(180deg);
   }
 }
 
 .userTitle {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  color: #8a8b9e;
+  gap: 8px;
+  font-size: 14px;
+  color: #ffffff !important;
   font-weight: 500;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 }
 
 .trophyIcon {
   color: #FFD700;
-  animation: trophyFloat 2s ease-in-out infinite;
+  animation: trophyFloat 2.5s ease-in-out infinite;
 }
 
 @keyframes trophyFloat {
   0%, 100% {
-    transform: translateY(0);
+    transform: translateY(0) rotate(-3deg);
   }
   50% {
-    transform: translateY(-3px);
+    transform: translateY(-4px) rotate(3deg);
   }
 }
 
-/* Level Badge */
+/* ============================================
+   LEVEL BADGE
+   ============================================ */
 .levelBadge {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 6px;
-  padding: 6px 16px 6px 12px;
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.12), rgba(255, 107, 0, 0.08));
-  border: 1px solid rgba(255, 215, 0, 0.2);
+  gap: 10px;
+  margin-top: 8px;
+  padding: 8px 20px 8px 14px;
+  background: rgba(0, 0, 0, 0.45) !important;
+  border: 1px solid rgba(255, 215, 0, 0.25);
   border-radius: 999px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
-  color: #FFD700;
+  color: #FFD700 !important;
   position: relative;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  backdrop-filter: blur(8px);
 }
 
 .levelBadge:hover {
-  transform: scale(1.02);
+  transform: scale(1.03);
   border-color: rgba(255, 215, 0, 0.4);
-  box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
+  box-shadow: 0 0 50px rgba(255, 215, 0, 0.1);
 }
 
 .crownIcon {
   color: #FFD700;
-  animation: crownBounce 2s ease-in-out infinite;
+  animation: crownBounce 2.5s ease-in-out infinite;
 }
 
 @keyframes crownBounce {
   0%, 100% {
-    transform: translateY(0) rotate(-5deg);
+    transform: translateY(0) rotate(-4deg);
   }
   50% {
-    transform: translateY(-3px) rotate(5deg);
+    transform: translateY(-4px) rotate(4deg);
   }
 }
 
 .levelBadgeGlow {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.05), transparent);
-  animation: glowSweep 3s ease-in-out infinite;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.06), transparent);
+  animation: glowSweep 4s ease-in-out infinite;
 }
 
 @keyframes glowSweep {
@@ -404,37 +561,39 @@
   }
 }
 
-/* XP Block */
+/* ============================================
+   XP BLOCK - ALL TEXT BRIGHT
+   ============================================ */
 .xpBlock {
-  margin-top: 16px;
+  margin-top: 18px;
 }
 
 .xpLabelRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 13px;
-  color: #8a8b9e;
-  margin-bottom: 8px;
+  font-size: 14px;
+  color: #ffffff !important;
+  margin-bottom: 10px;
 }
 
 .xpLabelWrapper {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .xpIcon {
-  color: #FF6B00;
-  animation: flameFlicker 1.5s ease-in-out infinite;
+  color: #FFD700;
+  animation: flameFlicker 1.8s ease-in-out infinite;
 }
 
 @keyframes flameFlicker {
   0%, 100% {
-    transform: scale(1) rotate(-5deg);
+    transform: scale(1) rotate(-6deg);
   }
   50% {
-    transform: scale(1.1) rotate(5deg);
+    transform: scale(1.15) rotate(6deg);
   }
 }
 
@@ -443,125 +602,70 @@
 }
 
 .xpCurrent {
-  color: #FFD700;
-  font-size: 15px;
+  color: #FFD700 !important;
+  font-size: 16px;
 }
 
 .xpDivider {
-  color: #4a4b5e;
-  margin: 0 4px;
+  color: #ffffff !important;
+  margin: 0 6px;
 }
 
 .xpMax {
-  color: #8a8b9e;
-  font-size: 13px;
+  color: #ffffff !important;
+  font-size: 14px;
 }
 
-/* XP Track */
+/* ============================================
+   XP TRACK
+   ============================================ */
 .xpTrackWrapper {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   position: relative;
 }
 
 .xpTrack {
   flex: 1;
-  height: 10px;
+  height: 12px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.6);
   overflow: visible;
   position: relative;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .xpFill {
   height: 100%;
   border-radius: 999px;
   background: linear-gradient(90deg, #FFD700, #FF6B00, #FF1493);
-  transition: width 1.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: width 2s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
-  box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+  box-shadow: 0 0 50px rgba(255, 215, 0, 0.25);
   overflow: visible;
 }
 
 .xpFillAnimated {
-  animation: xpPulse 2s ease-in-out infinite;
+  animation: xpPulse 2.5s ease-in-out infinite;
 }
 
 @keyframes xpPulse {
   0%, 100% {
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.25);
   }
   50% {
-    box-shadow: 0 0 60px rgba(255, 215, 0, 0.6), 0 0 90px rgba(255, 107, 0, 0.3);
+    box-shadow: 0 0 70px rgba(255, 215, 0, 0.5), 0 0 120px rgba(255, 107, 0, 0.25);
   }
 }
 
 .xpFillGlow {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  animation: glowSweep 2s ease-in-out infinite;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: glowSweep 2.5s ease-in-out infinite;
 }
 
-/* Bar Ripple Effect */
-.barRipple {
-  position: absolute;
-  right: -4px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: rgba(255, 215, 0, 0.4);
-  animation: ripple 1.5s ease-out infinite;
-}
-
-@keyframes ripple {
-  0% {
-    transform: translateY(-50%) scale(0.5);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-50%) scale(2);
-    opacity: 0;
-  }
-}
-
-/* Bar Sparkles */
-.barSparkles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.barSparkle {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: white;
-  border-radius: 50%;
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
-  animation: sparkleFloat 2s ease-in-out infinite;
-}
-
-@keyframes sparkleFloat {
-  0%, 100% {
-    opacity: 0;
-    transform: translateY(-50%) scale(0);
-  }
-  50% {
-    opacity: 1;
-    transform: translateY(-50%) scale(1.5);
-  }
-}
-
-/* XP Glow Trail */
 .xpGlowTrail {
   position: absolute;
   top: 0;
@@ -569,18 +673,18 @@
   height: 100%;
   border-radius: 999px;
   background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), transparent);
-  filter: blur(8px);
+  filter: blur(12px);
   pointer-events: none;
-  transition: width 1.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: width 2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .xpPercent {
-  font-size: 14px;
-  font-weight: 700;
-  color: #FFD700;
-  min-width: 44px;
+  font-size: 16px;
+  font-weight: 800;
+  color: #FFD700 !important;
+  min-width: 52px;
   text-align: right;
-  animation: percentPulse 2s ease-in-out infinite;
+  animation: percentPulse 2.5s ease-in-out infinite;
 }
 
 @keyframes percentPulse {
@@ -589,65 +693,40 @@
     transform: scale(1);
   }
   50% {
-    opacity: 0.7;
-    transform: scale(1.05);
+    opacity: 0.6;
+    transform: scale(1.08);
   }
 }
 
-/* Milestones */
-.milestones {
-  position: relative;
-  height: 20px;
-  margin-top: 4px;
-  width: 100%;
-}
-
-.milestone {
-  position: absolute;
-  top: 0;
-  transform: translateX(-50%);
+/* ============================================
+   XP FOOTER - ALL TEXT BRIGHT
+   ============================================ */
+.xpFooter {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  gap: 2px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
-.milestoneDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: all 0.5s ease;
-}
-
-.milestoneFinal .milestoneDot {
-  width: 8px;
-  height: 8px;
-  background: rgba(255, 215, 0, 0.2);
-}
-
-.milestoneLabel {
-  font-size: 8px;
-  color: rgba(255, 255, 255, 0.2);
-  white-space: nowrap;
-}
-
-/* XP To Next */
 .xpToNext {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 12px 0 0;
-  font-size: 12px;
-  color: #8a8b9e;
+  font-size: 13px;
+  color: #ffffff !important;
   font-weight: 500;
-  flex-wrap: wrap;
+}
+
+.xpToNext strong {
+  color: #FFD700 !important;
+  font-weight: 700;
 }
 
 .zapIcon {
   color: #FFD700;
-  animation: zapPulse 1s ease-in-out infinite;
+  animation: zapPulse 1.2s ease-in-out infinite;
 }
 
 @keyframes zapPulse {
@@ -656,125 +735,198 @@
     transform: scale(1);
   }
   50% {
-    opacity: 0.5;
-    transform: scale(0.8);
+    opacity: 0.4;
+    transform: scale(0.7);
   }
 }
 
-.xpProgressText {
-  color: #FFD700;
-  font-weight: 600;
-  margin-left: 4px;
+.xpProgressMessage {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #FFD700 !important;
+  background: rgba(0, 0, 0, 0.4) !important;
+  padding: 4px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 215, 0, 0.1);
+  backdrop-filter: blur(8px);
+  animation: messagePulse 3s ease-in-out infinite;
 }
 
-/* Progress Dots */
-.progressDots {
-  display: inline-flex;
-  gap: 4px;
-  margin-left: 8px;
-}
-
-.progressDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  transition: all 0.5s ease;
-  animation: dotAppear 0.5s ease backwards;
-}
-
-.progressDotActive {
-  background: #FFD700;
-  box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
-  animation: dotPulseActive 1s ease-in-out infinite;
-}
-
-@keyframes dotAppear {
-  0% {
-    opacity: 0;
-    transform: scale(0);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes dotPulseActive {
+@keyframes messagePulse {
   0%, 100% {
-    transform: scale(1);
-    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
   }
   50% {
-    transform: scale(1.3);
-    opacity: 0.7;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.05);
   }
 }
 
-/* Confetti */
-.confettiContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.confetti {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border-radius: 2px;
-  top: -10px;
-  animation: confettiFall linear infinite;
-}
-
-@keyframes confettiFall {
-  0% {
-    transform: translateY(0) rotate(0deg) scale(1);
-    opacity: 1;
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1024px) {
+  .hero {
+    padding: 30px 32px;
+    gap: 28px;
   }
-  100% {
-    transform: translateY(400px) rotate(720deg) scale(0);
-    opacity: 0;
+
+  .avatarFallback {
+    width: 88px;
+    height: 88px;
+    font-size: 28px;
+  }
+
+  .levelRing {
+    width: 112px;
+    height: 112px;
+    top: -10px;
+    left: -10px;
+  }
+
+  .levelBadgeRing {
+    width: 48px;
+    height: 48px;
+  }
+
+  .levelNumber {
+    font-size: 18px;
+  }
+
+  .name {
+    font-size: 26px;
   }
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .hero {
     flex-direction: column;
     align-items: flex-start;
     padding: 24px;
     gap: 20px;
+    border-radius: 20px;
+    min-height: auto;
+    background: 
+      linear-gradient(145deg, rgba(26, 27, 46, 0.75), rgba(37, 38, 64, 0.70)),
+      url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
   }
 
-  .avatarImg,
+  .hero::before {
+    border-radius: 22px;
+  }
+
   .avatarFallback {
-    width: 72px;
-    height: 72px;
-    font-size: 22px;
+    width: 76px;
+    height: 76px;
+    font-size: 24px;
   }
 
   .levelRing {
-    width: 92px;
-    height: 92px;
+    width: 100px;
+    height: 100px;
     top: -8px;
     left: -8px;
   }
 
   .levelBadgeRing {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
   }
 
   .levelNumber {
-    font-size: 15px;
+    font-size: 16px;
+  }
+
+  .name {
+    font-size: 22px;
+  }
+
+  .nameRow {
+    gap: 12px;
+  }
+
+  .statusPill {
+    font-size: 12px;
+    padding: 4px 14px 4px 10px;
+  }
+
+  .levelBadge {
+    font-size: 13px;
+    padding: 6px 16px 6px 12px;
+  }
+
+  .xpTrackWrapper {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .xpPercent {
+    text-align: left;
+  }
+
+  .xpFooter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .particlesContainer {
+    display: none;
+  }
+
+  .hero .orb2 {
+    display: none;
+  }
+
+  .hero::after {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 18px 16px;
+    gap: 16px;
+    border-radius: 16px;
+    background: 
+      linear-gradient(145deg, rgba(26, 27, 46, 0.80), rgba(37, 38, 64, 0.75)),
+      url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+  }
+
+  .hero::before {
+    border-radius: 18px;
+  }
+
+  .avatarFallback {
+    width: 64px;
+    height: 64px;
+    font-size: 20px;
+  }
+
+  .levelRing {
+    width: 88px;
+    height: 88px;
+    top: -6px;
+    left: -6px;
+  }
+
+  .levelBadgeRing {
+    width: 38px;
+    height: 38px;
+  }
+
+  .levelNumber {
+    font-size: 14px;
   }
 
   .name {
@@ -785,53 +937,18 @@
     gap: 10px;
   }
 
-  .xpTrackWrapper {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 6px;
+  .userTitle {
+    font-size: 12px;
   }
 
-  .xpPercent {
-    text-align: left;
+  .statusPill {
+    font-size: 11px;
+    padding: 3px 12px 3px 8px;
   }
 
-  .milestones {
-    display: none;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero {
-    padding: 18px;
-    gap: 16px;
-    border-radius: 16px;
-  }
-
-  .avatarImg,
-  .avatarFallback {
-    width: 60px;
-    height: 60px;
-    font-size: 18px;
-  }
-
-  .levelRing {
-    width: 80px;
-    height: 80px;
-    top: -6px;
-    left: -6px;
-  }
-
-  .levelBadgeRing {
-    width: 34px;
-    height: 34px;
-  }
-
-  .levelNumber {
-    font-size: 13px;
-  }
-
-  .name {
-    font-size: 18px;
+  .levelBadge {
+    font-size: 12px;
+    padding: 4px 14px 4px 10px;
   }
 
   .xpLabelRow {
@@ -841,21 +958,40 @@
     gap: 4px;
   }
 
-  .statusPill {
-    font-size: 11px;
-    padding: 2px 10px 2px 8px;
+  .xpCurrent {
+    font-size: 14px;
   }
 
-  .levelBadge {
+  .xpMax {
     font-size: 12px;
-    padding: 4px 12px 4px 10px;
+  }
+
+  .xpTrack {
+    height: 10px;
+  }
+
+  .xpPercent {
+    font-size: 14px;
+    min-width: 44px;
   }
 
   .xpToNext {
-    font-size: 11px;
+    font-size: 12px;
   }
 
-  .progressDots {
-    display: none;
+  .xpProgressMessage {
+    font-size: 12px;
+    padding: 3px 12px;
+  }
+
+  .hero::after {
+    width: 200px;
+    height: 200px;
+    top: -20%;
+  }
+
+  .avatarPulse {
+    inset: -6px;
+    filter: blur(10px);
   }
 }
