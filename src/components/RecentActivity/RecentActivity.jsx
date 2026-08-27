@@ -1,14 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Activity, Zap, Users, Gem, Send, Gift,
   TrendingUp, Clock, ChevronRight, Sparkles,
-  Award, Coins, Star, Wallet, ArrowUpRight
+  Award, Coins, Star, Wallet, ArrowUpRight,
+  ChevronLeft, ChevronRight as ChevronRightIcon
 } from 'lucide-react';
 import styles from './RecentActivity.module.css';
 
 const RecentActivity = ({ activities, onAction }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [hoveredActivity, setHoveredActivity] = useState(null);
+  const intervalRef = useRef(null);
 
   const defaultActivities = [
     {
@@ -68,11 +72,13 @@ const RecentActivity = ({ activities, onAction }) => {
   ];
 
   const activityData = activities || defaultActivities;
-  const [displayActivities, setDisplayActivities] = useState(activityData.slice(0, 4));
+  const itemsPerView = 3;
+  const totalSlides = Math.ceil(activityData.length / itemsPerView);
 
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
+  const getVisibleItems = () => {
+    const start = currentIndex * itemsPerView;
+    return activityData.slice(start, start + itemsPerView);
+  };
 
   const getTypeIcon = (type) => {
     switch(type) {
@@ -92,10 +98,51 @@ const RecentActivity = ({ activities, onAction }) => {
     }
   };
 
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % totalSlides);
+  };
+
+  const goToPrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
+  };
+
+  const goToSlide = (index) => {
+    setCurrentIndex(index);
+    resetAutoPlay();
+  };
+
+  const resetAutoPlay = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    if (isAutoPlaying) {
+      intervalRef.current = setInterval(goToNext, 4000);
+    }
+  };
+
+  useEffect(() => {
+    setIsVisible(true);
+    if (isAutoPlaying && totalSlides > 1) {
+      intervalRef.current = setInterval(goToNext, 4000);
+    }
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isAutoPlaying, totalSlides]);
+
+  useEffect(() => {
+    resetAutoPlay();
+  }, [currentIndex]);
+
+  const visibleItems = getVisibleItems();
+
   return (
     <section className={`${styles.section} ${isVisible ? styles.sectionVisible : ''}`}>
       <div className={styles.backgroundGlow}></div>
 
+      {/* Header */}
       <div className={styles.header}>
         <div className={styles.headerLeft}>
           <div className={styles.headerIcon}>
@@ -116,38 +163,78 @@ const RecentActivity = ({ activities, onAction }) => {
         </button>
       </div>
 
-      <div className={styles.activityList}>
-        {displayActivities.map((activity, index) => (
-          <div
-            key={activity.id}
-            className={`${styles.activityItem} ${hoveredActivity === activity.id ? styles.activityItemHover : ''}`}
-            onMouseEnter={() => setHoveredActivity(activity.id)}
-            onMouseLeave={() => setHoveredActivity(null)}
-            style={{ animationDelay: `${index * 0.08}s` }}
-          >
-            <div className={styles.activityIconWrapper} style={{ background: `${activity.color}15`, color: activity.color }}>
-              {activity.icon}
+      {/* Orbit Carousel */}
+      <div className={styles.orbitContainer}>
+        <div className={styles.orbitTrack}>
+          {visibleItems.map((activity, index) => (
+            <div
+              key={activity.id}
+              className={`${styles.orbitItem} ${hoveredActivity === activity.id ? styles.orbitItemHover : ''}`}
+              onMouseEnter={() => setHoveredActivity(activity.id)}
+              onMouseLeave={() => setHoveredActivity(null)}
+              style={{
+                animationDelay: `${index * 0.1}s`,
+                '--orbit-color': activity.color
+              }}
+            >
+              <div className={styles.orbitGlow} style={{ background: activity.color }}></div>
+              
+              <div className={styles.orbitIconWrapper} style={{ background: `${activity.color}15`, color: activity.color }}>
+                {activity.icon}
+              </div>
+
+              <div className={styles.orbitContent}>
+                <div className={styles.orbitTextWrapper}>
+                  <span className={styles.orbitText}>{activity.text}</span>
+                  <span className={styles.orbitTime}>{activity.time}</span>
+                </div>
+                <div className={styles.orbitMeta}>
+                  <span className={styles.orbitAmount}>{activity.amount}</span>
+                  <span className={styles.orbitType}>
+                    {getTypeIcon(activity.type)}
+                    {getTypeLabel(activity.type)}
+                  </span>
+                </div>
+              </div>
+
+              {hoveredActivity === activity.id && (
+                <div className={styles.orbitShine}></div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Navigation Controls */}
+        {totalSlides > 1 && (
+          <div className={styles.orbitControls}>
+            <button 
+              className={styles.orbitNavBtn}
+              onClick={goToPrev}
+              aria-label="Previous"
+            >
+              <ChevronLeft size={18} />
+            </button>
+            
+            <div className={styles.orbitDots}>
+              {Array.from({ length: totalSlides }).map((_, idx) => (
+                <button
+                  key={idx}
+                  className={`${styles.orbitDot} ${idx === currentIndex ? styles.orbitDotActive : ''}`}
+                  onClick={() => goToSlide(idx)}
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
+              ))}
             </div>
 
-            <div className={styles.activityContent}>
-              <div className={styles.activityTextWrapper}>
-                <span className={styles.activityText}>{activity.text}</span>
-                <span className={styles.activityTime}>{activity.time}</span>
-              </div>
-              <div className={styles.activityMeta}>
-                <span className={styles.activityAmount}>{activity.amount}</span>
-                <span className={styles.activityType}>
-                  {getTypeIcon(activity.type)}
-                  {getTypeLabel(activity.type)}
-                </span>
-              </div>
-            </div>
-
-            {hoveredActivity === activity.id && (
-              <div className={styles.activityShine}></div>
-            )}
+            <button 
+              className={styles.orbitNavBtn}
+              onClick={goToNext}
+              aria-label="Next"
+            >
+              <ChevronRightIcon size={18} />
+            </button>
           </div>
-        ))}
+        )}
       </div>
 
       {/* Quick Stats */}
@@ -161,7 +248,6 @@ const RecentActivity = ({ activities, onAction }) => {
             <span className={styles.statValue}>+2,580 VEs</span>
           </div>
         </div>
-        <div className={styles.statDivider}></div>
         <div className={styles.statItem}>
           <div className={styles.statIconWrapper}>
             <Wallet size={14} />
@@ -171,7 +257,6 @@ const RecentActivity = ({ activities, onAction }) => {
             <span className={styles.statValue}>-2,400 VEs</span>
           </div>
         </div>
-        <div className={styles.statDivider}></div>
         <div className={styles.statItem}>
           <div className={styles.statIconWrapper}>
             <Award size={14} />
