@@ -1,206 +1,447 @@
-# VELOOP Rewards — User Profile Redesign
+# 🏆 VELOOP Rewards - User Profile
 
-A completely reimagined `/user-profile` experience for **VELOOP Rewards**, combining gamification, fintech-grade trust, and rewards tracking into a single personal dashboard.
+[![React](https://img.shields.io/badge/React-18.x-61DAFB?style=flat&logo=react&logoColor=white)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-4.x-646CFF?style=flat&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![CSS Modules](https://img.shields.io/badge/CSS_Modules-100000?style=flat&logo=cssmodules&logoColor=white)](https://github.com/css-modules/css-modules)
+[![Lucide](https://img.shields.io/badge/Lucide_Icons-6C2BD9?style=flat&logo=lucide&logoColor=white)](https://lucide.dev/)
 
-> Built as part of Task 14 — VELOOP Rewards Internship Program.
-
-🔗 **Live Demo:** [your-vercel-url-here.vercel.app](#)
-📦 **GitHub Repository:** [https://github.com/Sara12-2/VELoop_Rewards-User-Profile](#)
+> **A Premium Gamified + Fintech User Profile Experience**
 
 ---
 
-## 🎯 Project Overview
+## 📌 Project Overview
 
-The redesigned profile reimagines the user's identity, rewards, progress, and activity as a single command center — moving away from a plain settings-style page toward a **digital wallet + achievement dashboard** experience.
+The VELOOP Rewards User Profile is a complete redesign of the user profile page for a gamified rewards platform. It combines **fintech professionalism** with **gamification elements** to create an engaging, trust-inspiring experience.
 
-It brings together:
+### 🎯 The Vision
 
-- **Identity** — who the user is
-- **Rewards** — what they've earned
-- **Progress** — how far they've come
-- **Achievements** — what they've unlocked
-- **Withdrawals** — what they've redeemed
-- **Referrals** — how they're growing the network
-- **Actions** — what they can do next
+> *"This is my VELOOP identity, my progress, my rewards, and my achievements."*
 
-The design direction intentionally balances two things that are often at odds: **gamification** (XP bars, levels, badges, milestones) and **fintech-grade trust** (clean typography, muted status colors, no neon/confetti/casino-style visuals).
+The profile serves as the user's **command center** where they can:
+- 👤 **Identify** - Who am I?
+- 🎁 **Rewards** - What have I earned?
+- 📈 **Progress** - How far have I come?
+- 🏆 **Achievements** - What have I unlocked?
+- 💰 **Withdrawals** - What have I redeemed?
+- 👥 **Referrals** - How am I growing?
+- ⚡ **Actions** - What can I do next?
 
 ---
 
 ## ✨ Features
 
-### Identity & Profile
-- Profile Hero with avatar (image / initials fallback), name, level badge, and animated XP progress bar
-- Account status indicator ("Account Active ✓")
-- Dedicated Profile Information cards — User ID, Email, Referral Code, Current Level
-- Copy-to-clipboard on User ID and Referral Code with a "Copied!" toast
+### 🎨 Profile Hero
+- Dynamic avatar with initials fallback
+- User name with sparkle animation
+- Level badge with crown icon
+- Animated XP progress bar
+- Account status indicator
 
-### Reward Assets
-- Five distinct reward types — **VEs, SVEs, Gems, Tokens, XP** — each with its own color identity, icon, and animated count-up value
-- Hover-triggered `[i]` info tooltips explaining each reward type
+### 🆔 Profile Identity
+- Premium information cards with icons
+- User ID with copy functionality
+- Email address display
+- Referral code with copy functionality
+- Member since date
+- Account status with verification badges
+- Security status indicators
 
-### Gamification
-- Level Progress card with animated XP bar and "XP to next level" indicator
-- Current Achievement card (unlocked badge + "View Achievements" CTA)
-- Next Achievement preview with its own progress bar, to encourage return visits
+### 💰 Reward Assets
+- **VEs** (Gold theme) - Primary reward currency
+- **SVEs** (Silver theme) - Premium reward currency
+- **Gems** (Cyan theme) - Collectible rewards
+- **Tokens** (Purple theme) - Platform utility tokens
+- **XP** (Orange theme) - Experience points
+- Each asset has distinct visual identity
+- Tooltips with information icons
+- Clickable action buttons
 
-### Withdrawals
-- Withdrawal Overview with Total Requests, Approved, Pending, and Total Amount Withdrawn
-- Status-based color coding (soft green / warm amber / muted red — no neon)
-- Empty state for users with no withdrawal history yet
+### 📊 Level Progress
+- Animated XP progress bar
+- Milestone markers (25%, 50%, 75%, 100%)
+- Level badge with dynamic icon
+- XP to next level display
+- Progress messages
 
-### Engagement
-- Quick Actions grid — Get More Gems, Earn More Rewards, Watch Ads, Refer Friends, Redeem Rewards, Achievements — as interactive hover cards, not plain buttons
-- Referral Snapshot with milestone progress bar and referral stats
-- Recent Activity feed showing recent credits/debits
+### 🏆 Achievements
+- Current achievement with unlocked status
+- Next achievement with progress ring
+- Orbiting dot animation (like hero section)
+- View achievements CTA
 
-### UX & Trust
-- Loading skeleton (shimmer effect) so the page is never blank while data loads
-- Simulated fetch with error state + working "Try Again" retry
-- Expandable Account Information section
-- Empty states for Referral and Withdrawal sections when there's no data yet
+### 💳 Withdrawal Overview
+- Total amount withdrawn (prominent)
+- Stat cards (Total Requests, Approved, Pending, Failed)
+- Visual progress bar with status colors
+- Status indicators (Green, Amber, Red)
 
-### Accessibility
-- Visible keyboard focus states (`:focus-visible`) throughout
-- `role="progressbar"` with `aria-valuenow`/`aria-valuemin`/`aria-valuemax` on all progress bars
-- `aria-label`s on icon-only buttons (copy buttons, info tooltips)
-- Touch-friendly tap targets (44px+) on small icon buttons
-- Respects `prefers-reduced-motion` for users who've disabled animations
-- Status is never conveyed by color alone (icons/text accompany all status indicators)
+### ⚡ Quick Actions
+- 6 interactive action cards
+- Get More Gems
+- Earn More Rewards
+- Watch Ads
+- Refer Friends
+- Redeem Rewards
+- Achievements
+- Hover animations (elevation, icon movement)
 
-### Responsive Design
-Fully responsive from 320px mobile up through 1920px+ large screens, with layout order optimized per device rather than simply shrinking the desktop view.
+### 👥 Referral Snapshot
+- Referral code with copy functionality
+- Total referrals count
+- Referral rewards display
+- Referral XP bonus
+- Milestone progress bar
+
+### 📋 Recent Activity
+- Orbit carousel with auto-play
+- Activity list with icons
+- Earn/Spend/Achievement indicators
+- Timestamps
+- Total earned/spent stats
+
+### 🔐 Account Information
+- Expandable section
+- Account fields with copy
+- Security status indicators
+- Quick action buttons
+- Trust message
+
+### 🎮 Animations & Effects
+- Glassmorphic card design
+- Animated gradient borders
+- Floating particles and orbs
+- Staggered section appearances
+- Hover effects with elevation
+- XP progress animation
+- Count-up animations
+- Shine effects on cards
+- Orbit carousel with auto-play
+
+### 📱 Responsive Design
+- Mobile (320px+)
+- Tablet (768px+)
+- Laptop (1280px+)
+- Desktop (1440px+)
+- Large screens (1920px+)
 
 ---
 
-## 🛠 Tech Stack
+## 🛠️ Technology Stack
 
-| Category | Technology |
-|---|---|
-| Framework | React.js (Vite) |
-| Styling | CSS Modules + Bootstrap |
-| Icons | Lucide React |
-| State | React Hooks (`useState`, `useEffect`, `useCallback`) |
-| Custom Hooks | `useCountUp`, `useCopyToClipboard` |
+| Technology | Purpose |
+|------------|---------|
+| **React 18** | UI Framework |
+| **Vite** | Build Tool |
+| **CSS Modules** | Component Styling |
+| **Lucide React** | Icons |
+| **React Hooks** | State Management |
 
 ---
 
 ## 📁 Folder Structure
-
-```
+```bash
 src/
 ├── components/
-│   ├── ProfileHero/
-│   ├── ProfileIdentity/
-│   ├── RewardAssets/
-│   │   ├── RewardAssets.jsx
-│   │   ├── VEsCard/
-│   │   ├── SVEsCard/
-│   │   ├── GemsCard/
-│   │   ├── TokensCard/
-│   │   └── XPCard/
-│   ├── LevelProgress/
-│   ├── AchievementCard/
-│   ├── WithdrawalOverview/
-│   ├── QuickActions/
-│   ├── ReferralSnapshot/
-│   ├── RecentActivity/
-│   ├── AccountInformation/
-│   ├── ProfileEmptyState/
-│   └── ProfileSkeleton/
-├── pages/
-│   └── UserProfile/
+│ ├── AccountInformation/
+│ │ ├── AccountInformation.jsx
+│ │ └── AccountInformation.module.css
+│ ├── AchievementCard/
+│ │ ├── AchievementCard.jsx
+│ │ └── AchievementCard.module.css
+│ ├── LevelProgress/
+│ │ ├── LevelProgress.jsx
+│ │ └── LevelProgress.module.css
+│ ├── ProfileEmptyState/
+│ │ ├── ProfileEmptyState.jsx
+│ │ └── ProfileEmptyState.module.css
+│ ├── ProfileHero/
+│ │ ├── ProfileHero.jsx
+│ │ └── ProfileHero.module.css
+│ ├── ProfileIdentity/
+│ │ ├── ProfileIdentity.jsx
+│ │ └── ProfileIdentity.module.css
+│ ├── ProfileSkeleton/
+│ │ ├── ProfileSkeleton.jsx
+│ │ └── ProfileSkeleton.module.css
+│ ├── QuickActions/
+│ │ ├── QuickActions.jsx
+│ │ └── QuickActions.module.css
+│ ├── RecentActivity/
+│ │ ├── RecentActivity.jsx
+│ │ └── RecentActivity.module.css
+│ ├── ReferralSnapshot/
+│ │ ├── ReferralSnapshot.jsx
+│ │ └── ReferralSnapshot.module.css
+│ ├── RewardAssets/
+│ │ ├── RewardAssets.jsx
+│ │ ├── RewardAssets.module.css
+│ │ ├── VEsCard/
+│ │ │ ├── VEsCard.jsx
+│ │ │ └── VEsCard.module.css
+│ │ ├── SVEsCard/
+│ │ │ ├── SVEsCard.jsx
+│ │ │ └── SVEsCard.module.css
+│ │ ├── GemsCard/
+│ │ │ ├── GemsCard.jsx
+│ │ │ └── GemsCard.module.css
+│ │ ├── TokensCard/
+│ │ │ ├── TokensCard.jsx
+│ │ │ └── TokensCard.module.css
+│ │ └── XPCard/
+│ │ ├── XPCard.jsx
+│ │ └── XPCard.module.css
+│ └── WithdrawalOverview/
+│ ├── WithdrawalOverview.jsx
+│ └── WithdrawalOverview.module.css
 ├── data/
-│   ├── userData.js
-│   ├── rewardsData.js
-│   ├── withdrawalData.js
-│   └── activityData.js
+│ ├── activityData.js
+│ ├── index.js
+│ ├── rewardsData.js
+│ ├── userData.js
+│ └── withdrawalData.js
 ├── hooks/
-│   ├── useCountUp.js
-│   └── useCopyToClipboard.js
-├── assets/
-├── index.css
+│ ├── index.js
+│ ├── useCopyToClipboard.js
+│ ├── useCountUp.js
+│ ├── useIntersectionObserver.js
+│ └── useWindowSize.js
+├── pages/
+│ └── UserProfile/
+│ ├── UserProfile.jsx
+│ └── UserProfile.module.css
+├── styles/
+│ └── global.css
 ├── App.jsx
-├── App.css
+├── index.css
 └── main.jsx
+
 ```
 
-Every component is self-contained with its own `.jsx` and `.module.css` pair, keeping styles scoped and avoiding one large monolithic file.
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Installation & Setup
+
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn
+
+### Installation
 
 ```bash
-# Clone the repo
-git clone https://github.com/your-username/veloop-rewards-user-profile.git
-cd veloop-rewards-user-profile
+# Clone the repository
+git clone https://github.com/Sara12-2/VELoop_Rewards-User-Profile
+
+# Navigate to project directory
+cd VELoop_Rewards-User-Profile
 
 # Install dependencies
 npm install
 
-# Start dev server
+# Start development server
+npm run dev
+```
+
+## Development Commands
+```bash
+# Start development server
 npm run dev
 
 # Build for production
 npm run build
 
-# Preview the production build locally
+# Preview production build
 npm run preview
+
+# Lint code
+npm run lint
+
+```
+# VELOOP Rewards — Profile Page
+
+## 🎨 Design System
+
+### Color Palette
+
+| Color          | Hex                 | Usage              |
+| -------------- | ------------------- | ------------------ |
+| Background     | `#0f1020 → #1a1b2e` | Main page gradient |
+| Gold Primary   | `#FFD700`           | Primary accent     |
+| Gold Secondary | `#FFA500`           | Secondary accent   |
+| Purple         | `#8B5CF6`           | Achievement accent |
+| Blue           | `#3B82F6`           | Info accent        |
+| Pink           | `#EC4899`           | Soft accent        |
+| Teal           | `#14B8A6`           | Fresh accent       |
+| Green          | `#81C784`           | Success states     |
+| Red            | `#E57373`           | Danger states      |
+| Amber          | `#FFB74D`           | Warning states     |
+| Silver         | `#C0C0C0`           | SVEs accent        |
+
+### Typography
+
+* **Font Family:** Inter (Google Fonts)
+* **Font Weights:** 300, 400, 500, 600, 700, 800, 900
+
+### Effects
+
+* **Glassmorphism:** Backdrop blur + transparency
+* **Glow Effects:** Box-shadow with gold tint
+* **Animations:** CSS keyframes with cubic-bezier
+* **Transitions:** Smooth hover and state changes
+
+---
+
+## 📱 Responsive Behavior
+
+| Device        | Breakpoint        | Layout                 |
+| ------------- | ----------------- | ---------------------- |
+| Small Mobile  | `< 480px`         | Single column, compact |
+| Mobile        | `480px – 768px`   | Single column          |
+| Tablet        | `768px – 1024px`  | 2 columns              |
+| Laptop        | `1024px – 1280px` | 2 columns              |
+| Desktop       | `1280px – 1440px` | Full layout            |
+| Large Desktop | `> 1440px`        | Full layout            |
+
+---
+
+## 🏗️ Component Architecture
+
+### Core Components
+
+```text
+UserProfile (Page)
+├── ProfileHero
+├── ProfileIdentity
+├── RewardAssets
+│   ├── VEsCard
+│   ├── SVEsCard
+│   ├── GemsCard
+│   ├── TokensCard
+│   └── XPCard
+├── LevelProgress
+├── AchievementCard
+│   ├── CurrentAchievement
+│   └── NextAchievement
+├── WithdrawalOverview
+├── QuickActions
+├── ReferralSnapshot
+├── RecentActivity
+└── AccountInformation
 ```
 
+### Utility Components
+
+* `ProfileSkeleton` — Loading state
+* `ProfileEmptyState` — Empty/Error state
+
+### Custom Hooks
+
+* `useCountUp` — Animated number counting
+* `useCopyToClipboard` — Copy functionality
+* `useIntersectionObserver` — Scroll animations
+* `useWindowSize` — Responsive behavior
+
 ---
 
-## 🔄 Data Handling
+## 📸 Screenshots
 
-All sections currently render from dummy data in `src/data/`, structured to mirror what a real API response would look like:
+### Desktop View
 
-```js
-{
-  user: { name, email, userId, referralCode, level },
-  rewards: { ves, sves, gems, tokens, xp },
-  withdrawals: { totalRequests, pending, approved, totalAmount },
-  activity: [...],
-  referral: { code, totalReferrals, referralRewards, referralXP }
-}
+`https://./screenshots/desktop.png`
+
+### Mobile View
+
+`https://./screenshots/mobile.png`
+
+### Tablet View
+
+`https://./screenshots/tablet.png`
+
+### Component Views
+
+* Profile Hero
+* Reward Assets (VEs, SVEs, Gems, Tokens, XP)
+* Level Progress
+* Achievements
+* Withdrawal Overview
+* Quick Actions
+* Referral Section
+* Activity Section
+* Empty State
+* Loading State
+* Error State
+
+---
+
+## 🔗 Live Demo
+
+🔴 **View Live Demo**
+
+https://ve-loop-rewards-user-profile.vercel.app/
+
+---
+
+## 📦 GitHub Repository
+
+🔗 **GitHub Repository**
+
+https://github.com/Sara12-2/VELoop_Rewards-User-Profile
+
+---
+
+## 👨‍💻 Author
+
+**Your Name**
+
+* GitHub: `Sara12-2`
+* LinkedIn: Sara Manzoor
+
+---
+
+## 📝 License
+
+This project is proprietary and confidential.
+
+---
+
+## 🙏 Acknowledgments
+
+* Unsplash for background images
+* Lucide for icons
+* VELOOP Rewards for the opportunity
+
+---
+
+## 📊 Project Status
+
+| Feature             | Status     |
+| ------------------- | ---------- |
+| Profile Hero        | ✅ Complete |
+| Profile Identity    | ✅ Complete |
+| Reward Assets       | ✅ Complete |
+| Level Progress      | ✅ Complete |
+| Achievements        | ✅ Complete |
+| Withdrawal Overview | ✅ Complete |
+| Quick Actions       | ✅ Complete |
+| Referral Snapshot   | ✅ Complete |
+| Recent Activity     | ✅ Complete |
+| Account Information | ✅ Complete |
+| Loading State       | ✅ Complete |
+| Empty State         | ✅ Complete |
+| Error State         | ✅ Complete |
+| Responsive Design   | ✅ Complete |
+| Animations          | ✅ Complete |
+| Accessibility       | ✅ Complete |
+
+---
+
+## 🎯 User Journey
+
+```text
+Earn → Collect → Progress → Achieve → Redeem → Return
 ```
 
-The page (`UserProfile.jsx`) fetches this through a simulated async function (`fetchProfileData`) with realistic loading and error states — swapping in a real API call means replacing that one function, with no changes needed to any component.
-
-> ⚠️ Dummy values (e.g. 3,850 VEs, ₹2,450 withdrawn) are for frontend development only and do not represent real user data.
+The design motivates users while maintaining professional trustworthiness.
 
 ---
 
-## 📱 Responsive Breakpoints
-
-| Device | Width |
-|---|---|
-| Mobile | 320px+ |
-| Tablet | 768px+ |
-| Laptop | 1280px+ |
-| Desktop | 1440px+ |
-| Large screens | 1920px+ |
-
-Mobile layout order: Hero → Identity → Reward Assets → Level/Achievements → Withdrawal Overview → Quick Actions → Referral → Recent Activity → Account Information.
-
----
-
----
-
-## 🎨 Design Direction
-
-- **Background:** `#161827` deep navy, consistent across the whole app
-- **Palette:** gold, warm yellow, silver, soft blue, muted purple, soft green — no neon, no rainbow gradients
-- **Philosophy:** "Premium Gamification" — motivating without tipping into casino-style visuals
-
----
-
-## 👩‍💻 Author
-
-**Sara** — Frontend Development Intern, VELOOP Rewards
-
----
-
-## 📄 License
-
-This project was built for internal evaluation as part of the VELOOP Rewards Internship Program.
