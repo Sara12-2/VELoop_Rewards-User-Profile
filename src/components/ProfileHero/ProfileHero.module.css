@@ -6,9 +6,7 @@
   align-items: center;
   gap: 32px;
   background: 
-    /* Lighter Overlay for better readability */
     linear-gradient(145deg, rgba(26, 27, 46, 0.60), rgba(37, 38, 64, 0.55)),
-    /* Background Image */
     url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&auto=format&fit=crop');
   background-size: cover;
   background-position: center;
@@ -380,7 +378,7 @@
 }
 
 /* ============================================
-   STATUS BADGE - BRIGHT
+   STATUS BADGE
    ============================================ */
 .statusPill {
   display: inline-flex;
@@ -430,7 +428,7 @@
 }
 
 /* ============================================
-   INFO SECTION - ALL TEXT WHITE/GOLD
+   INFO SECTION
    ============================================ */
 .info {
   flex: 1;
@@ -562,7 +560,7 @@
 }
 
 /* ============================================
-   XP BLOCK - ALL TEXT BRIGHT
+   XP BLOCK
    ============================================ */
 .xpBlock {
   margin-top: 18px;
@@ -699,7 +697,7 @@
 }
 
 /* ============================================
-   XP FOOTER - ALL TEXT BRIGHT
+   XP FOOTER
    ============================================ */
 .xpFooter {
   display: flex;
@@ -762,6 +760,63 @@
   50% {
     box-shadow: 0 0 25px rgba(255, 215, 0, 0.05);
   }
+}
+
+/* ============================================
+   MILESTONE MARKERS - FIXED (VISIBLE)
+   ============================================ */
+.milestones {
+  position: relative;
+  height: 24px;
+  margin-top: 6px;
+  width: 100%;
+}
+
+.milestone {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.milestoneDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.5s ease;
+}
+
+.milestoneActive .milestoneDot {
+  background: #FFD700 !important;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+
+.milestoneLabel {
+  font-size: 9px;
+  color: #ffffff !important;
+  font-weight: 600;
+  white-space: nowrap;
+  text-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+}
+
+.milestoneActive .milestoneLabel {
+  color: #FFD700 !important;
+}
+
+.milestoneFinal .milestoneDot {
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 215, 0, 0.15) !important;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.milestoneFinal .milestoneLabel {
+  color: #FFD700 !important;
 }
 
 /* ============================================
