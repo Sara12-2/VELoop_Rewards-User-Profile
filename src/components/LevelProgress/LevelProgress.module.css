@@ -2,38 +2,42 @@
 
 .card {
   position: relative;
-  background: linear-gradient(145deg, #141526, #1e1f32);
-  border: 1px solid rgba(255, 215, 0, 0.04);
+  background: linear-gradient(145deg, rgba(26, 27, 46, 0.60), rgba(37, 38, 64, 0.55));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 215, 0, 0.08);
   border-radius: 24px;
-  padding: 28px;
+  padding: 24px;
   margin-bottom: 16px;
   overflow: hidden;
   opacity: 0;
   transform: translateY(30px) scale(0.96);
   transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
   box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    0 8px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 0 60px rgba(255, 215, 0, 0.02);
 }
 
 /* ============================================
-   ANIMATED GRADIENT BORDER
+   ANIMATED BORDER GLOW - Like Hero
    ============================================ */
 .card::before {
   content: '';
   position: absolute;
-  inset: -1px;
-  border-radius: 25px;
-  padding: 1px;
-  background: conic-gradient(
-    from 0deg,
-    rgba(255, 215, 0, 0.2),
-    rgba(255, 107, 0, 0.05),
-    rgba(255, 20, 147, 0.05),
-    rgba(124, 77, 255, 0.05),
-    rgba(255, 215, 0, 0.2)
+  inset: -2px;
+  border-radius: 26px;
+  padding: 2px;
+  background: linear-gradient(
+    135deg, 
+    rgba(255, 215, 0, 0.3), 
+    rgba(255, 107, 0, 0.1), 
+    rgba(255, 215, 0, 0.3),
+    rgba(255, 20, 147, 0.1),
+    rgba(255, 215, 0, 0.3)
   );
-  animation: borderRotate 6s linear infinite;
+  background-size: 300% 300%;
+  animation: borderGlow 4s ease-in-out infinite;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -41,31 +45,76 @@
   z-index: 0;
 }
 
-@keyframes borderRotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+@keyframes borderGlow {
+  0%, 100% {
+    background-position: 0% 50%;
+    opacity: 0.5;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 1;
+  }
 }
 
 /* ============================================
-   ANIMATED TOP LINE
+   BACKGROUND ANIMATED ORBS - Like Hero
    ============================================ */
 .card::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #FFD700, #FF6B00, #FFD700, transparent);
-  background-size: 200% 100%;
-  animation: shimmerLine 4s ease-in-out infinite;
-  opacity: 0.4;
-  z-index: 1;
+  top: -30%;
+  right: -10%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.08), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: orbFloat1 8s ease-in-out infinite;
+  z-index: 0;
 }
 
-@keyframes shimmerLine {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+@keyframes orbFloat1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.4;
+  }
+  33% {
+    transform: translate(-30px, 20px) scale(1.2);
+    opacity: 0.8;
+  }
+  66% {
+    transform: translate(30px, -20px) scale(0.8);
+    opacity: 0.5;
+  }
+}
+
+/* Second Orb - Like Hero */
+.glowOrb2 {
+  position: absolute;
+  bottom: -20%;
+  left: -5%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(124, 77, 255, 0.06), rgba(0, 188, 212, 0.03), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: orbFloat2 10s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes orbFloat2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(40px, -30px) scale(1.3);
+    opacity: 0.7;
+  }
+  75% {
+    transform: translate(-30px, 40px) scale(0.7);
+    opacity: 0.4;
+  }
 }
 
 .cardVisible {
@@ -86,62 +135,7 @@
 }
 
 /* ============================================
-   BACKGROUND GLOW ORBS
-   ============================================ */
-.cardGlow {
-  position: absolute;
-  top: -30%;
-  right: -10%;
-  width: 350px;
-  height: 350px;
-  background: radial-gradient(circle, rgba(255, 215, 0, 0.04), transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  animation: glowFloat1 8s ease-in-out infinite;
-  z-index: 0;
-}
-
-.glowOrb2 {
-  position: absolute;
-  bottom: -20%;
-  left: -10%;
-  width: 250px;
-  height: 250px;
-  background: radial-gradient(circle, rgba(124, 77, 255, 0.03), transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  animation: glowFloat2 10s ease-in-out infinite;
-  z-index: 0;
-}
-
-@keyframes glowFloat1 {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.3;
-  }
-  33% {
-    transform: translate(-30px, 20px) scale(1.2);
-    opacity: 0.6;
-  }
-  66% {
-    transform: translate(30px, -20px) scale(0.8);
-    opacity: 0.4;
-  }
-}
-
-@keyframes glowFloat2 {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.2;
-  }
-  50% {
-    transform: translate(40px, -30px) scale(1.3);
-    opacity: 0.5;
-  }
-}
-
-/* ============================================
-   FLOATING PARTICLES
+   FLOATING PARTICLES - Like Hero
    ============================================ */
 .particlesContainer {
   position: absolute;
@@ -154,23 +148,67 @@
 .particle {
   position: absolute;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 215, 0, 0.3), transparent);
-  animation: particleFloat 5s ease-in-out infinite;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.5), transparent);
+  animation: floatParticle 8s ease-in-out infinite;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
 }
 
-.particle:nth-child(1) { width: 5px; height: 5px; top: 15%; left: 8%; animation-delay: 0s; }
-.particle:nth-child(2) { width: 3px; height: 3px; top: 30%; right: 12%; animation-delay: 1s; }
-.particle:nth-child(3) { width: 7px; height: 7px; bottom: 25%; left: 20%; animation-delay: 2s; }
-.particle:nth-child(4) { width: 4px; height: 4px; bottom: 40%; right: 25%; animation-delay: 0.5s; }
-.particle:nth-child(5) { width: 6px; height: 6px; top: 60%; left: 45%; animation-delay: 1.5s; }
+.particle:nth-child(1) {
+  width: 6px;
+  height: 6px;
+  top: 15%;
+  left: 8%;
+  animation-delay: 0s;
+  animation-duration: 6s;
+}
+.particle:nth-child(2) {
+  width: 4px;
+  height: 4px;
+  top: 30%;
+  right: 12%;
+  animation-delay: 1s;
+  animation-duration: 8s;
+}
+.particle:nth-child(3) {
+  width: 8px;
+  height: 8px;
+  bottom: 25%;
+  left: 20%;
+  animation-delay: 2s;
+  animation-duration: 7s;
+}
+.particle:nth-child(4) {
+  width: 3px;
+  height: 3px;
+  bottom: 40%;
+  right: 25%;
+  animation-delay: 0.5s;
+  animation-duration: 9s;
+}
+.particle:nth-child(5) {
+  width: 5px;
+  height: 5px;
+  top: 60%;
+  left: 45%;
+  animation-delay: 1.5s;
+  animation-duration: 5s;
+}
 
-@keyframes particleFloat {
+@keyframes floatParticle {
   0%, 100% {
     transform: translate(0, 0) scale(1);
-    opacity: 0;
+    opacity: 0.1;
+  }
+  25% {
+    transform: translate(20px, -30px) scale(1.5);
+    opacity: 0.6;
   }
   50% {
-    transform: translate(15px, -25px) scale(1.5);
+    transform: translate(-10px, -45px) scale(0.7);
+    opacity: 0.3;
+  }
+  75% {
+    transform: translate(15px, -20px) scale(1.2);
     opacity: 0.5;
   }
 }
@@ -182,17 +220,17 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   position: relative;
   z-index: 1;
 }
 
 .badge {
   position: relative;
-  width: 52px;
-  height: 52px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.14), rgba(255, 107, 0, 0.04));
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.12), rgba(255, 107, 0, 0.04));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -211,7 +249,7 @@
 .badgeGlow {
   position: absolute;
   inset: -3px;
-  border-radius: 19px;
+  border-radius: 17px;
   background: radial-gradient(circle, rgba(255, 215, 0, 0.08), transparent 70%);
   animation: badgePulse 2.5s ease-in-out infinite;
 }
@@ -245,15 +283,15 @@
 }
 
 .levelPrefix {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  color: #6a6b7e;
+  color: #8a8b9e;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .levelNumber {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 900;
   color: #FFD700;
   letter-spacing: 0.02em;
@@ -261,9 +299,9 @@
 }
 
 .levelName {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
-  color: #b0b1c0;
+  color: #c0c1d0;
   margin: 0;
 }
 
@@ -271,11 +309,11 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   color: #FFD700;
   background: rgba(255, 215, 0, 0.06);
-  padding: 5px 16px 5px 12px;
+  padding: 4px 14px 4px 10px;
   border-radius: 999px;
   border: 1px solid rgba(255, 215, 0, 0.06);
   flex-shrink: 0;
@@ -286,10 +324,6 @@
   background: rgba(255, 215, 0, 0.1);
   border-color: rgba(255, 215, 0, 0.1);
   box-shadow: 0 0 30px rgba(255, 215, 0, 0.04);
-}
-
-.levelBadge svg {
-  color: #FFD700;
 }
 
 /* ============================================
@@ -304,7 +338,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .xpLabelWrapper {
@@ -314,7 +348,7 @@
 }
 
 .xpIcon {
-  color: #FF6B00;
+  color: #FFD700;
   animation: flameFlicker 1.8s ease-in-out infinite;
 }
 
@@ -330,7 +364,7 @@
 .xpLabel {
   font-size: 13px;
   font-weight: 500;
-  color: #8a8b9e;
+  color: #c0c1d0;
 }
 
 .xpValues {
@@ -340,24 +374,24 @@
 }
 
 .xpCurrent {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   color: #ffffff;
 }
 
 .xpDivider {
-  font-size: 14px;
-  color: #4a4b5e;
+  font-size: 13px;
+  color: #6a6b7e;
 }
 
 .xpMax {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: #8a8b9e;
 }
 
 /* ============================================
-   TRACK - ENHANCED
+   TRACK - ENHANCED LIKE HERO
    ============================================ */
 .trackWrapper {
   display: flex;
@@ -369,19 +403,19 @@
   flex: 1;
   height: 10px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(0, 0, 0, 0.4);
   overflow: visible;
   position: relative;
-  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .fill {
   height: 100%;
   border-radius: 999px;
   background: linear-gradient(90deg, #FFD700, #FF6B00, #FF1493);
-  transition: width 1.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: width 2s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
-  box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.2);
   overflow: visible;
 }
 
@@ -406,12 +440,8 @@
 }
 
 @keyframes glowSweep {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 .fillSparkle {
@@ -419,9 +449,9 @@
   right: -4px;
   top: 50%;
   transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
-  background: radial-gradient(circle, rgba(255, 215, 0, 0.4), transparent);
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.3), transparent);
   border-radius: 50%;
   animation: sparklePulse 1.5s ease-in-out infinite;
 }
@@ -446,14 +476,14 @@
   background: linear-gradient(90deg, rgba(255, 215, 0, 0.08), transparent);
   filter: blur(12px);
   pointer-events: none;
-  transition: width 1.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: width 2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .percent {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 800;
   color: #FFD700;
-  min-width: 52px;
+  min-width: 48px;
   text-align: right;
   animation: percentPulse 2.5s ease-in-out infinite;
 }
@@ -474,8 +504,8 @@
    ============================================ */
 .milestones {
   position: relative;
-  height: 24px;
-  margin-top: 6px;
+  height: 22px;
+  margin-top: 4px;
   width: 100%;
 }
 
@@ -486,15 +516,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
+  gap: 2px;
 }
 
 .milestoneDot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   transition: all 0.5s ease;
 }
 
@@ -505,7 +535,7 @@
 }
 
 .milestoneLabel {
-  font-size: 9px;
+  font-size: 8px;
   color: rgba(255, 255, 255, 0.2);
   white-space: nowrap;
   font-weight: 600;
@@ -529,7 +559,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 12px;
+  margin-top: 10px;
 }
 
 .toNext {
@@ -537,7 +567,7 @@
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  color: #8a8b9e;
+  color: #c0c1d0;
 }
 
 .toNext strong {
@@ -565,13 +595,13 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: #FFD700;
-  background: rgba(255, 215, 0, 0.04);
-  padding: 4px 16px;
+  background: rgba(255, 215, 0, 0.06);
+  padding: 3px 14px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 215, 0, 0.04);
+  border: 1px solid rgba(255, 215, 0, 0.06);
   animation: messagePulse 3s ease-in-out infinite;
 }
 
@@ -580,7 +610,7 @@
     box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
   }
   50% {
-    box-shadow: 0 0 25px rgba(255, 215, 0, 0.04);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.04);
   }
 }
 
@@ -589,28 +619,28 @@
    ============================================ */
 @media (max-width: 1024px) {
   .card {
-    padding: 24px;
-    border-radius: 20px;
-  }
-
-  .levelNumber {
-    font-size: 22px;
-  }
-}
-
-@media (max-width: 768px) {
-  .card {
     padding: 20px;
-    border-radius: 18px;
+    border-radius: 20px;
   }
 
   .levelNumber {
     font-size: 20px;
   }
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 18px;
+    border-radius: 18px;
+  }
+
+  .levelNumber {
+    font-size: 18px;
+  }
 
   .badge {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
   }
 
   .badge svg {
@@ -619,12 +649,12 @@
   }
 
   .levelBadge {
-    font-size: 11px;
-    padding: 3px 12px;
+    font-size: 10px;
+    padding: 2px 12px;
   }
 
   .xpCurrent {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .milestones {
@@ -642,78 +672,86 @@
   }
 
   .percent {
-    font-size: 16px;
-    min-width: 48px;
+    font-size: 15px;
+    min-width: 44px;
+  }
+
+  .particlesContainer {
+    display: none;
+  }
+
+  .glowOrb2 {
+    display: none;
   }
 }
 
 @media (max-width: 480px) {
   .card {
-    padding: 16px;
+    padding: 14px;
     border-radius: 16px;
   }
 
   .header {
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
   }
 
   .badge {
-    width: 38px;
-    height: 38px;
-    border-radius: 12px;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
   }
 
   .badge svg {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
   }
 
   .levelPrefix {
-    font-size: 10px;
+    font-size: 9px;
   }
 
   .levelNumber {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .levelName {
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .levelBadge {
-    font-size: 10px;
-    padding: 2px 10px;
+    font-size: 9px;
+    padding: 2px 8px;
   }
 
   .xpLabel {
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .xpCurrent {
-    font-size: 14px;
-  }
-
-  .xpMax {
     font-size: 13px;
   }
 
+  .xpMax {
+    font-size: 12px;
+  }
+
   .track {
-    height: 7px;
+    height: 6px;
   }
 
   .percent {
-    font-size: 15px;
-    min-width: 44px;
+    font-size: 14px;
+    min-width: 40px;
   }
 
   .toNext {
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .progressMessage {
-    font-size: 12px;
-    padding: 3px 12px;
+    font-size: 11px;
+    padding: 2px 10px;
   }
 
   .milestones {
@@ -725,6 +763,10 @@
   }
 
   .glowOrb2 {
+    display: none;
+  }
+
+  .card::after {
     display: none;
   }
 }
