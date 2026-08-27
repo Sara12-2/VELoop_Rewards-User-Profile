@@ -28,6 +28,109 @@ The profile serves as the user's **command center** where they can:
 
 ---
 
+## 📸 Screenshots
+
+## 📸 Screenshots
+
+### Desktop Views
+
+![Profile Hero](./public/profile%20hero%20.png)
+Profile Hero Section
+
+![Profile Identity](./public/profile%20identity.png)
+Profile Identity Section
+
+![Reward Assets](./public/level%20Rewards.png)
+Reward Assets Section
+
+![Level Progress](./public/level%20Rewards.png)
+Level Progress Section
+
+![Achievements](./public/Achievements.png)
+Achievements Section
+
+![Withdrawal Overview](./public/withdrawal%20overview.png)
+Withdrawal Overview Section
+
+![Quick Actions](./public/Quick%20Actions.png)
+Quick Actions Section
+
+![Referral Snapshot](./public/Referal%20snapshot.png)
+Referral Snapshot Section
+
+![Recent Activity](./public/Recent%20Activity.png)
+Recent Activity Section
+
+![Account Information](./public/Account%20information.png)
+Account Information Section
+
+---
+
+### Mobile Views
+
+![Mobile View 1](./public/Mobile%20Friendly1.png)
+*Mobile View 1*
+
+![Mobile View 2](./public/mobile%20Friendly2.png)
+*Mobile View 2*
+
+![Mobile View 3](./public/mobile%20friendly%203.png)
+*Mobile View 3*
+
+![Mobile View 4](./public/mobile%20friendly%204.png)
+*Mobile View 4*
+
+![Mobile View 6](./public/mobile%20friendly%206.png)
+*Mobile View 6*
+
+![Mobile View 7](./public/mobile%20friendly%207.png)
+*Mobile View 7*
+---
+
+### 📊 Component Preview
+
+| Component | Preview |
+|-----------|---------|
+| **Profile Hero** | Avatar, Name, Level, XP Progress, Status Badge |
+| **Profile Identity** | User ID, Email, Referral Code, Member Since, Account Status |
+| **Reward Assets** | VEs, SVEs, Gems, Tokens, XP Cards |
+| **Level Progress** | Animated XP Bar, Milestones, Level Badge |
+| **Achievements** | Current Achievement, Next Achievement with Progress |
+| **Withdrawal Overview** | Total Amount, Stats Cards, Status Indicators |
+| **Quick Actions** | 6 Interactive Action Cards |
+| **Referral Snapshot** | Referral Code, Stats, Milestone Progress |
+| **Recent Activity** | Orbit Carousel with Activity List |
+| **Account Information** | Account Fields, Security, Trust Message |
+
+---
+
+### 🎨 Design Highlights
+
+| Feature | Description |
+|---------|-------------|
+| **Glassmorphism** | Blur effects with transparency |
+| **Animated Borders** | Rotating gradient borders |
+| **Floating Particles** | Gold particles animation |
+| **Orbit Effects** | Moving dots around circles |
+| **3D Hover** | Card tilt and elevation |
+| **Smooth Transitions** | Staggered animations |
+| **Dark Theme** | Premium navy/gold color scheme |
+| **Responsive** | Mobile → Tablet → Desktop |
+
+---
+
+### 📱 Responsive Behavior
+
+| Breakpoint | Layout | Behavior |
+|------------|--------|----------|
+| **> 1440px** | Full Desktop | 2 columns, full features |
+| **1280px - 1440px** | Desktop | 2 columns, optimized spacing |
+| **1024px - 1280px** | Laptop | 2 columns, compact |
+| **768px - 1024px** | Tablet | 2 → 1 columns |
+| **480px - 768px** | Mobile | Single column |
+| **< 480px** | Small Mobile | Single column, compact |
+
+
 ## ✨ Features
 
 ### 🎨 Profile Hero
@@ -343,33 +446,10 @@ UserProfile (Page)
 
 ---
 
-## 📸 Screenshots
 
-### Desktop View
+---
 
-`https://./screenshots/desktop.png`
-
-### Mobile View
-
-`https://./screenshots/mobile.png`
-
-### Tablet View
-
-`https://./screenshots/tablet.png`
-
-### Component Views
-
-* Profile Hero
-* Reward Assets (VEs, SVEs, Gems, Tokens, XP)
-* Level Progress
-* Achievements
-* Withdrawal Overview
-* Quick Actions
-* Referral Section
-* Activity Section
-* Empty State
-* Loading State
-* Error State
+### 🎯 User Journey Flow
 
 ---
 
