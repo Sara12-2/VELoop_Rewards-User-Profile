@@ -33,58 +33,70 @@ The profile serves as the user's **command center** where they can:
 ## 📸 Screenshots
 
 ### Desktop Views
-
+## Profile Hero Section
 ![Profile Hero](./public/profile%20hero%20.png)
-Profile Hero Section
+---
 
+## Profile Identity Section
 ![Profile Identity](./public/profile%20identity.png)
-Profile Identity Section
-
+---
+## Reward Assets Section
 ![Reward Assets](./public/level%20Rewards.png)
-Reward Assets Section
+
+---
+## Level Progress Section
 
 ![Level Progress](./public/level%20Rewards.png)
-Level Progress Section
+---
+## Achievements Section
 
 ![Achievements](./public/Achievements.png)
-Achievements Section
+---
+
+## Withdrawal Overview Section
 
 ![Withdrawal Overview](./public/withdrawal%20overview.png)
-Withdrawal Overview Section
+---
+## Quick Actions Section
 
 ![Quick Actions](./public/Quick%20Actions.png)
-Quick Actions Section
+---
+## Referral Snapshot Section
 
 ![Referral Snapshot](./public/Referal%20snapshot.png)
-Referral Snapshot Section
 
+---
+## Recent Activity Section
 ![Recent Activity](./public/Recent%20Activity.png)
-Recent Activity Section
 
+---
+## Account Information Section
 ![Account Information](./public/Account%20information.png)
-Account Information Section
+
 
 ---
 
 ### Mobile Views
 
 ![Mobile View 1](./public/Mobile%20Friendly1.png)
-*Mobile View 1*
+---
+
 
 ![Mobile View 2](./public/mobile%20Friendly2.png)
-*Mobile View 2*
+
+---
 
 ![Mobile View 3](./public/mobile%20friendly%203.png)
-*Mobile View 3*
+---
 
 ![Mobile View 4](./public/mobile%20friendly%204.png)
-*Mobile View 4*
+
+---
 
 ![Mobile View 6](./public/mobile%20friendly%206.png)
-*Mobile View 6*
+ ---
 
 ![Mobile View 7](./public/mobile%20friendly%207.png)
-*Mobile View 7*
 ---
 
 ### 📊 Component Preview
