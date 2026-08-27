@@ -34,34 +34,44 @@ const RewardAssets = ({ rewards, onAction }) => {
 
       <div className={styles.assetsGrid}>
         {/* VEs Card */}
-        <VEsCard 
-          value={rewards.ves} 
-          onAction={() => handleAssetAction('ves')}
-        />
+        <div className={`${styles.assetCard} ${styles.vesCard}`}>
+          <VEsCard 
+            value={rewards.ves} 
+            onAction={() => handleAssetAction('ves')}
+          />
+        </div>
 
         {/* SVEs Card */}
-        <SVEsCard 
-          value={rewards.sves} 
-          onAction={() => handleAssetAction('sves')}
-        />
+        <div className={`${styles.assetCard} ${styles.svesCard}`}>
+          <SVEsCard 
+            value={rewards.sves} 
+            onAction={() => handleAssetAction('sves')}
+          />
+        </div>
 
         {/* Gems Card */}
-        <GemsCard 
-          value={rewards.gems} 
-          onAction={() => handleAssetAction('gems')}
-        />
+        <div className={`${styles.assetCard} ${styles.gemsCard}`}>
+          <GemsCard 
+            value={rewards.gems} 
+            onAction={() => handleAssetAction('gems')}
+          />
+        </div>
 
         {/* Tokens Card */}
-        <TokensCard 
-          value={rewards.tokens} 
-          onAction={() => handleAssetAction('tokens')}
-        />
+        <div className={`${styles.assetCard} ${styles.tokensCard}`}>
+          <TokensCard 
+            value={rewards.tokens} 
+            onAction={() => handleAssetAction('tokens')}
+          />
+        </div>
 
         {/* XP Card */}
-        <XPCard 
-          value={rewards.xp} 
-          onAction={() => handleAssetAction('xp')}
-        />
+        <div className={`${styles.assetCard} ${styles.xpCard}`}>
+          <XPCard 
+            value={rewards.xp} 
+            onAction={() => handleAssetAction('xp')}
+          />
+        </div>
       </div>
     </section>
   );
