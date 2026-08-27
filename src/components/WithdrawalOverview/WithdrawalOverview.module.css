@@ -1,40 +1,168 @@
+/* src/components/WithdrawalOverview/WithdrawalOverview.module.css */
+
 .section {
   position: relative;
-  background: linear-gradient(145deg, #1a1b2e, #252640);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 215, 0, 0.08);
+  background: linear-gradient(145deg, #141526, #1e1f32);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 215, 0, 0.04);
   padding: 28px;
   margin-bottom: 24px;
   overflow: hidden;
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(30px) scale(0.96);
   transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+/* ============================================
+   ANIMATED GRADIENT BORDER
+   ============================================ */
+.section::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 25px;
+  padding: 1px;
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 215, 0, 0.15),
+    rgba(255, 107, 0, 0.05),
+    rgba(255, 20, 147, 0.05),
+    rgba(124, 77, 255, 0.05),
+    rgba(0, 188, 212, 0.05),
+    rgba(255, 215, 0, 0.15)
+  );
+  animation: borderRotate 8s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes borderRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .sectionVisible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
+  animation: sectionAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-.backgroundGlow {
+@keyframes sectionAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================
+   GLASSMORPHIC BACKGROUND EFFECTS
+   ============================================ */
+.section::after {
+  content: '';
   position: absolute;
   top: -30%;
   right: -10%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(255, 215, 0, 0.03), transparent 70%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.04), transparent 70%);
   border-radius: 50%;
   pointer-events: none;
-  animation: glowFloat 6s ease-in-out infinite;
+  animation: orbFloat1 12s ease-in-out infinite;
+  z-index: 0;
 }
 
-@keyframes glowFloat {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-20px, 20px) scale(1.1); }
-  66% { transform: translate(20px, -20px) scale(0.9); }
+.glowOrb2 {
+  position: absolute;
+  bottom: -20%;
+  left: -10%;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(124, 77, 255, 0.03), rgba(0, 188, 212, 0.02), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: orbFloat2 15s ease-in-out infinite;
+  z-index: 0;
 }
 
-/* Header */
+@keyframes orbFloat1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+  33% {
+    transform: translate(-40px, 30px) scale(1.2);
+    opacity: 0.6;
+  }
+  66% {
+    transform: translate(40px, -30px) scale(0.8);
+    opacity: 0.4;
+  }
+}
+
+@keyframes orbFloat2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translate(50px, -40px) scale(1.3);
+    opacity: 0.5;
+  }
+  75% {
+    transform: translate(-40px, 50px) scale(0.7);
+    opacity: 0.3;
+  }
+}
+
+/* ============================================
+   FLOATING PARTICLES
+   ============================================ */
+.particlesContainer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.3), transparent);
+  animation: particleFloat 6s ease-in-out infinite;
+}
+
+.particle:nth-child(1) { width: 5px; height: 5px; top: 10%; left: 8%; animation-delay: 0s; }
+.particle:nth-child(2) { width: 3px; height: 3px; top: 30%; right: 12%; animation-delay: 1s; }
+.particle:nth-child(3) { width: 7px; height: 7px; bottom: 20%; left: 15%; animation-delay: 2s; }
+.particle:nth-child(4) { width: 4px; height: 4px; bottom: 35%; right: 20%; animation-delay: 0.5s; }
+.particle:nth-child(5) { width: 6px; height: 6px; top: 50%; left: 40%; animation-delay: 1.5s; }
+.particle:nth-child(6) { width: 4px; height: 4px; top: 70%; left: 25%; animation-delay: 2.5s; }
+
+@keyframes particleFloat {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(15px, -25px) scale(1.5);
+    opacity: 0.4;
+  }
+}
+
+/* ============================================
+   HEADER - PREMIUM
+   ============================================ */
 .header {
   display: flex;
   justify-content: space-between;
@@ -47,65 +175,72 @@
 .headerLeft {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .headerIcon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 107, 0, 0.08));
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.14), rgba(255, 107, 0, 0.04));
   color: #FFD700;
-  animation: iconPulse 2s ease-in-out infinite;
+  animation: iconPulse 2.5s ease-in-out infinite;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 @keyframes iconPulse {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  50% { transform: scale(1.05); box-shadow: 0 0 40px rgba(255, 215, 0, 0.04); }
 }
 
 .title {
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 800;
   color: #ffffff;
   margin: 0;
   letter-spacing: -0.02em;
+  text-shadow: 0 0 30px rgba(255, 215, 0, 0.02);
 }
 
 .headerBadge {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  font-size: 11px;
+  gap: 6px;
+  font-size: 12px;
   font-weight: 600;
   color: #8a8b9e;
-  background: rgba(255, 255, 255, 0.04);
-  padding: 4px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 5px 14px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
 }
 
 .viewAllBtn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: none;
-  border: none;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.03);
   color: #8a8b9e;
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 4px 12px;
-  border-radius: 8px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  padding: 6px 14px;
+  border-radius: 10px;
+  backdrop-filter: blur(8px);
 }
 
 .viewAllBtn:hover {
   color: #FFD700;
-  background: rgba(255, 215, 0, 0.05);
+  background: rgba(255, 215, 0, 0.04);
+  border-color: rgba(255, 215, 0, 0.06);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.03);
 }
 
 .viewAllBtn:hover svg {
@@ -116,54 +251,90 @@
   transition: transform 0.3s ease;
 }
 
-/* Total Card */
+/* ============================================
+   TOTAL CARD - GLASSMORPHIC
+   ============================================ */
 .totalCard {
   position: relative;
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.06), rgba(255, 107, 0, 0.02));
-  border: 1px solid rgba(255, 215, 0, 0.12);
-  border-radius: 16px;
-  padding: 24px;
+  background: rgba(255, 215, 0, 0.02);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 215, 0, 0.06);
+  border-radius: 18px;
+  padding: 24px 28px;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
   margin-bottom: 20px;
   overflow: hidden;
-  transition: all 0.4s ease;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.totalCard::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 19px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), transparent 60%, rgba(255, 215, 0, 0.05));
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.totalCard:hover::before {
+  opacity: 1;
 }
 
 .totalCard:hover {
-  border-color: rgba(255, 215, 0, 0.25);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(255, 215, 0, 0.05);
+  border-color: rgba(255, 215, 0, 0.1);
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 
+    0 12px 50px rgba(0, 0, 0, 0.3),
+    0 0 80px rgba(255, 215, 0, 0.02);
 }
 
 .totalCardGlow {
   position: absolute;
   top: -50%;
   right: -20%;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(255, 215, 0, 0.05), transparent 70%);
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.04), transparent 70%);
   border-radius: 50%;
   pointer-events: none;
+  transition: all 0.6s ease;
+}
+
+.totalCard:hover .totalCardGlow {
+  transform: scale(1.3);
+  opacity: 0.5;
 }
 
 .totalIconWrap {
   position: relative;
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 107, 0, 0.05));
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.12), rgba(255, 107, 0, 0.04));
   display: flex;
   align-items: center;
   justify-content: center;
   color: #FFD700;
   flex-shrink: 0;
-  transition: all 0.4s ease;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .totalCard:hover .totalIconWrap {
-  transform: scale(1.05) rotate(-5deg);
+  transform: scale(1.08) rotate(-6deg);
+  box-shadow: 0 8px 40px rgba(255, 215, 0, 0.06);
 }
 
 .totalIconShine {
@@ -172,8 +343,8 @@
   left: -50%;
   width: 200%;
   height: 200%;
-  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
-  animation: shine 3s ease-in-out infinite;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.04) 50%, transparent 70%);
+  animation: shine 4s ease-in-out infinite;
 }
 
 @keyframes shine {
@@ -186,17 +357,19 @@
   flex-direction: column;
   gap: 2px;
   z-index: 1;
+  flex: 1;
 }
 
 .totalAmount {
-  font-size: 32px;
+  font-size: 34px;
   font-weight: 800;
   color: #ffffff;
   letter-spacing: -0.02em;
+  text-shadow: 0 0 40px rgba(255, 215, 0, 0.02);
 }
 
 .totalLabel {
-  font-size: 13px;
+  font-size: 14px;
   color: #8a8b9e;
   font-weight: 500;
 }
@@ -205,17 +378,20 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
-  color: #4CAF50;
-  background: rgba(76, 175, 125, 0.1);
-  padding: 2px 10px;
+  color: #81C784;
+  background: rgba(76, 175, 125, 0.06);
+  padding: 3px 12px;
   border-radius: 999px;
   margin-top: 4px;
   width: fit-content;
+  border: 1px solid rgba(76, 175, 125, 0.04);
 }
 
-/* Stat Grid */
+/* ============================================
+   STAT GRID - GLASSMORPHIC CARDS
+   ============================================ */
 .statGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -226,15 +402,18 @@
 }
 
 .statCard {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 14px;
-  padding: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  padding: 18px 16px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  animation: cardAppear 0.5s ease backwards;
+  gap: 14px;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: cardAppear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .statCard:nth-child(1) { animation-delay: 0.05s; }
@@ -243,31 +422,48 @@
 .statCard:nth-child(4) { animation-delay: 0.20s; }
 
 @keyframes cardAppear {
-  0% { opacity: 0; transform: translateY(15px) scale(0.95); }
+  0% { opacity: 0; transform: translateY(20px) scale(0.94); }
   100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
+.statCard::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 17px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.04), transparent 60%, rgba(255, 215, 0, 0.02));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.statCard:hover::before {
+  opacity: 1;
+}
+
 .statCard:hover {
-  transform: translateY(-3px);
-  border-color: rgba(255, 215, 0, 0.15);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px) scale(1.02);
+  border-color: rgba(255, 215, 0, 0.06);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
 }
 
 .statIconWrapper {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  background: rgba(255, 255, 255, 0.04);
-  color: #8a8b9e;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .statCard:hover .statIconWrapper {
-  transform: scale(1.05);
+  transform: scale(1.08) rotate(-4deg);
 }
 
 .statContent {
@@ -275,7 +471,7 @@
 }
 
 .statValue {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
   color: #ffffff;
   margin: 0;
@@ -283,7 +479,7 @@
 }
 
 .statLabel {
-  font-size: 11px;
+  font-size: 12px;
   color: #8a8b9e;
   margin: 0;
   font-weight: 500;
@@ -295,9 +491,9 @@
   gap: 2px;
   font-size: 11px;
   font-weight: 600;
-  color: #4CAF50;
-  background: rgba(76, 175, 125, 0.08);
-  padding: 2px 8px;
+  color: #81C784;
+  background: rgba(76, 175, 125, 0.06);
+  padding: 2px 10px;
   border-radius: 6px;
 }
 
@@ -311,64 +507,76 @@
 }
 
 .statusDotGreen {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: #4CAF50;
+  background: #81C784;
   animation: dotPulse 1.5s ease-in-out infinite;
+  box-shadow: 0 0 12px rgba(76, 175, 125, 0.15);
 }
 
 .statusDotAmber {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: #FFB74D;
   animation: dotPulse 2s ease-in-out infinite;
+  box-shadow: 0 0 12px rgba(255, 183, 77, 0.12);
 }
 
 .statusDotRed {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: #E57373;
   animation: dotPulse 2.5s ease-in-out infinite;
+  box-shadow: 0 0 12px rgba(229, 115, 115, 0.12);
 }
 
 @keyframes dotPulse {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.6); }
+  50% { opacity: 0.3; transform: scale(0.5); }
 }
 
 /* Card Variants */
-.totalRequestsCard .statIconWrapper { color: #FFD700; background: rgba(255, 215, 0, 0.08); }
-.approvedCard .statIconWrapper { color: #4CAF50; background: rgba(76, 175, 125, 0.08); }
-.pendingCard .statIconWrapper { color: #FFB74D; background: rgba(255, 183, 77, 0.08); }
-.otherCard .statIconWrapper { color: #E57373; background: rgba(229, 115, 115, 0.08); }
+.totalRequestsCard .statIconWrapper { color: #FFD700; background: rgba(255, 215, 0, 0.06); }
+.approvedCard .statIconWrapper { color: #81C784; background: rgba(76, 175, 125, 0.06); }
+.pendingCard .statIconWrapper { color: #FFB74D; background: rgba(255, 183, 77, 0.06); }
+.otherCard .statIconWrapper { color: #E57373; background: rgba(229, 115, 115, 0.06); }
 
-.approvedCard .statValue { color: #4CAF50; }
+.approvedCard .statValue { color: #81C784; }
 .pendingCard .statValue { color: #FFB74D; }
 .otherCard .statValue { color: #E57373; }
 
-/* Visualization */
+/* ============================================
+   VISUALIZATION - GLASSMORPHIC
+   ============================================ */
 .visualization {
   position: relative;
   z-index: 1;
   padding-top: 4px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 14px;
+  padding: 16px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.02);
 }
 
 .visualBar {
-  height: 8px;
+  height: 10px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.03);
   overflow: hidden;
   display: flex;
-  gap: 2px;
+  gap: 3px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .visualSegment {
   height: 100%;
   border-radius: 999px;
-  transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
   display: flex;
   align-items: center;
@@ -376,7 +584,7 @@
 }
 
 .segmentLabel {
-  font-size: 8px;
+  font-size: 9px;
   font-weight: 700;
   color: #ffffff;
   opacity: 0;
@@ -389,63 +597,74 @@
 
 .approvedSegment {
   background: linear-gradient(90deg, #4CAF50, #66BB6A);
-  box-shadow: 0 0 20px rgba(76, 175, 125, 0.2);
+  box-shadow: 0 0 25px rgba(76, 175, 125, 0.15);
 }
 
 .pendingSegment {
   background: linear-gradient(90deg, #FFB74D, #FFA726);
-  box-shadow: 0 0 20px rgba(255, 183, 77, 0.2);
+  box-shadow: 0 0 25px rgba(255, 183, 77, 0.12);
 }
 
 .otherSegment {
   background: linear-gradient(90deg, #E57373, #EF5350);
-  box-shadow: 0 0 20px rgba(229, 115, 115, 0.2);
+  box-shadow: 0 0 25px rgba(229, 115, 115, 0.12);
 }
 
 .visualLegend {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-top: 10px;
+  gap: 18px;
+  margin-top: 12px;
 }
 
 .legendItem {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 11px;
+  font-size: 12px;
   color: #8a8b9e;
   font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.legendItem:hover {
+  color: #ffffff;
+  transform: translateX(2px);
 }
 
 .legendDotGreen {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: #4CAF50;
+  box-shadow: 0 0 15px rgba(76, 175, 125, 0.15);
 }
 
 .legendDotAmber {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: #FFB74D;
+  box-shadow: 0 0 15px rgba(255, 183, 77, 0.12);
 }
 
 .legendDotRed {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: #E57373;
+  box-shadow: 0 0 15px rgba(229, 115, 115, 0.12);
 }
 
-/* Empty State */
+/* ============================================
+   EMPTY STATE - GLASSMORPHIC
+   ============================================ */
 .emptyState {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px 20px;
+  padding: 48px 24px;
   text-align: center;
   position: relative;
   z-index: 1;
@@ -453,41 +672,43 @@
 
 .emptyIconWrapper {
   position: relative;
-  width: 72px;
-  height: 72px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  background: rgba(255, 215, 0, 0.05);
+  background: rgba(255, 215, 0, 0.04);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 215, 0, 0.04);
 }
 
 .emptyIconGlow {
   position: absolute;
-  inset: -4px;
+  inset: -6px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 215, 0, 0.1), transparent 70%);
-  animation: glowPulse 2s ease-in-out infinite;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.06), transparent 70%);
+  animation: glowPulse 2.5s ease-in-out infinite;
 }
 
 @keyframes glowPulse {
-  0%, 100% { transform: scale(1); opacity: 0.5; }
-  50% { transform: scale(1.2); opacity: 1; }
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.2); opacity: 0.6; }
 }
 
 .emptyIcon {
   color: #FFD700;
-  animation: iconFloat 3s ease-in-out infinite;
+  animation: iconFloat 3.5s ease-in-out infinite;
 }
 
 @keyframes iconFloat {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
+  50% { transform: translateY(-6px); }
 }
 
 .emptyTitle {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   color: #ffffff;
   margin: 0 0 8px;
@@ -496,9 +717,9 @@
 .emptyText {
   font-size: 14px;
   color: #8a8b9e;
-  max-width: 360px;
-  margin: 0 0 20px;
-  line-height: 1.5;
+  max-width: 380px;
+  margin: 0 0 24px;
+  line-height: 1.6;
 }
 
 .emptyCta {
@@ -508,46 +729,62 @@
   background: linear-gradient(135deg, #FFD700, #FFA500);
   border: none;
   color: #161827;
-  padding: 10px 24px;
-  border-radius: 10px;
+  padding: 12px 28px;
+  border-radius: 12px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.1);
 }
 
 .emptyCta:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 40px rgba(255, 215, 0, 0.25);
 }
 
 .emptyCta:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
 }
 
-/* Responsive */
+/* ============================================
+   RESPONSIVE
+   ============================================ */
 @media (max-width: 1024px) {
   .statGrid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .section {
+    padding: 24px;
+    border-radius: 20px;
   }
 }
 
 @media (max-width: 768px) {
   .section {
     padding: 20px;
+    border-radius: 18px;
   }
 
   .totalCard {
-    padding: 18px;
+    padding: 18px 20px;
+    gap: 16px;
+    border-radius: 16px;
   }
 
   .totalAmount {
-    font-size: 26px;
+    font-size: 28px;
   }
 
   .totalIconWrap {
-    width: 48px;
-    height: 48px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .totalIconWrap svg {
+    width: 22px;
+    height: 22px;
   }
 
   .statGrid {
@@ -556,11 +793,22 @@
   }
 
   .statCard {
-    padding: 14px;
+    padding: 14px 12px;
+    border-radius: 14px;
   }
 
   .statValue {
     font-size: 20px;
+  }
+
+  .statIconWrapper {
+    width: 34px;
+    height: 34px;
+  }
+
+  .statIconWrapper svg {
+    width: 16px;
+    height: 16px;
   }
 
   .header {
@@ -572,9 +820,26 @@
     margin-left: auto;
   }
 
+  .visualization {
+    padding: 14px 16px;
+  }
+
   .visualLegend {
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px;
+  }
+
+  .headerBadge {
+    display: none;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .headerIcon {
+    width: 38px;
+    height: 38px;
   }
 }
 
@@ -589,6 +854,7 @@
     align-items: flex-start;
     gap: 12px;
     padding: 16px;
+    border-radius: 14px;
   }
 
   .totalAmount {
@@ -611,8 +877,9 @@
   }
 
   .statCard {
-    padding: 12px;
-    gap: 8px;
+    padding: 10px 12px;
+    gap: 10px;
+    border-radius: 12px;
   }
 
   .statValue {
@@ -622,6 +889,7 @@
   .statIconWrapper {
     width: 30px;
     height: 30px;
+    border-radius: 10px;
   }
 
   .statIconWrapper svg {
@@ -629,42 +897,63 @@
     height: 14px;
   }
 
+  .statLabel {
+    font-size: 10px;
+  }
+
   .statTrend {
     display: none;
   }
 
   .statStatus {
-    font-size: 10px;
-  }
-
-  .headerBadge {
-    display: none;
+    font-size: 9px;
   }
 
   .viewAllBtn {
-    padding: 2px 8px;
+    padding: 3px 10px;
     font-size: 11px;
   }
 
-  .visualization {
-    margin-top: 4px;
+  .viewAllBtn svg {
+    width: 14px;
+    height: 14px;
   }
 
-  .visualSegment {
-    min-width: 8px;
+  .visualization {
+    padding: 12px 14px;
+  }
+
+  .visualBar {
+    height: 8px;
+  }
+
+  .visualLegend {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .legendItem {
+    font-size: 11px;
+  }
+
+  .legendDotGreen,
+  .legendDotAmber,
+  .legendDotRed {
+    width: 8px;
+    height: 8px;
   }
 
   .emptyState {
-    padding: 20px 12px;
+    padding: 24px 16px;
   }
 
   .emptyIconWrapper {
-    width: 56px;
-    height: 56px;
+    width: 60px;
+    height: 60px;
   }
 
   .emptyTitle {
-    font-size: 16px;
+    font-size: 17px;
   }
 
   .emptyText {
@@ -672,7 +961,15 @@
   }
 
   .emptyCta {
-    padding: 8px 18px;
+    padding: 8px 20px;
     font-size: 13px;
+  }
+
+  .glowOrb2 {
+    display: none;
+  }
+
+  .particlesContainer {
+    display: none;
   }
 }
