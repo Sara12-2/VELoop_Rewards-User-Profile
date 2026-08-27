@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { Trophy } from "lucide-react";
 import ProfileHero from "../../components/ProfileHero/ProfileHero";
 import ProfileIdentity from "../../components/ProfileIdentity/ProfileIdentity";
 import RewardAssets from "../../components/RewardAssets/RewardAssets";
@@ -12,15 +13,12 @@ import AccountInformation from "../../components/AccountInformation/AccountInfor
 import ProfileSkeleton from "../../components/ProfileSkeleton/ProfileSkeleton";
 import ProfileEmptyState from "../../components/ProfileEmptyState/ProfileEmptyState";
 
-// ✅ Correct imports - check the paths
 import { userData } from "../../data/userData";
 import { rewardsData, achievements } from "../../data/rewardsData";
 import { withdrawalData } from "../../data/withdrawalData";
 import { activityData, referralData } from "../../data/activityData";
 
 import styles from "./UserProfile.module.css";
-
-// ... rest of the code
 
 function fetchProfileData() {
   return new Promise((resolve, reject) => {
@@ -68,12 +66,10 @@ export default function UserProfile() {
 
   const handleViewAchievements = () => {
     console.log("View Achievements clicked");
-    // Navigate to achievements page or show modal
   };
 
   const handleQuickAction = (actionId) => {
     console.log("Quick action clicked:", actionId);
-    // Handle different quick actions
     switch(actionId) {
       case 'gems':
         console.log('Navigate to Gems page');
@@ -100,7 +96,6 @@ export default function UserProfile() {
 
   const handleRewardAction = (assetId) => {
     console.log("Reward asset clicked:", assetId);
-    // Handle different reward assets
     switch(assetId) {
       case 'ves':
         console.log('Navigate to VEs Wallet');
@@ -124,12 +119,10 @@ export default function UserProfile() {
 
   const handleReferralAction = (actionId) => {
     console.log("Referral action:", actionId);
-    // Handle referral actions
   };
 
   const handleActivityAction = (actionId) => {
     console.log("Activity action:", actionId);
-    // Handle activity actions
   };
 
   if (status === "loading") {
@@ -153,30 +146,61 @@ export default function UserProfile() {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.profileWrapper}>
-        {/* Hero Section */}
+        
+        {/* ============================================
+            ROW 1: Profile Hero - Full Width
+            ============================================ */}
         <ProfileHero 
           user={data.user} 
           xp={data.rewards.xp} 
         />
 
-        {/* Profile Identity */}
-        <ProfileIdentity
-          user={data.user}
-          level={data.rewards.xp.level}
-          levelName={data.rewards.xp.levelName}
-          memberSince={data.user.memberSince}
-        />
+        {/* ============================================
+            ROW 2: Level Progress - Full Width
+            ============================================ */}
+        <LevelProgress xp={data.rewards.xp} />
 
-        {/* Reward Assets */}
-        <RewardAssets 
-          rewards={data.rewards} 
-          onAction={handleRewardAction}
-        />
-
-        {/* Two Column Layout - Level & Achievements */}
+        {/* ============================================
+            ROW 3: Two Column - Identity + Rewards
+            ============================================ */}
         <div className={styles.twoCol}>
-          <LevelProgress xp={data.rewards.xp} />
-          <div className={styles.achievementStack}>
+          <div className={styles.leftColumn}>
+            <ProfileIdentity
+              user={data.user}
+              level={data.rewards.xp.level}
+              levelName={data.rewards.xp.levelName}
+              memberSince={data.user.memberSince}
+            />
+          </div>
+          <div className={styles.rightColumn}>
+            <RewardAssets 
+              rewards={data.rewards} 
+              onAction={handleRewardAction}
+            />
+          </div>
+        </div>
+
+        {/* ============================================
+            ROW 4: Withdrawal Overview - Full Width
+            ============================================ */}
+        <WithdrawalOverview withdrawals={data.withdrawals} />
+
+        {/* ============================================
+            ROW 5: Achievements - One Box Side by Side
+            ============================================ */}
+        <div className={styles.achievementsWrapper}>
+          <div className={styles.achievementsHeader}>
+            <div className={styles.achievementsHeaderLeft}>
+              <div className={styles.achievementsHeaderIcon}>
+                <Trophy size={18} />
+              </div>
+              <h3 className={styles.achievementsTitle}>Achievements</h3>
+              <span className={styles.achievementsBadge}>
+                {data.achievements.current.unlocked ? '1 Unlocked' : '0 Unlocked'}
+              </span>
+            </div>
+          </div>
+          <div className={styles.achievementsGrid}>
             <CurrentAchievement 
               achievement={data.achievements.current} 
               onViewAll={handleViewAchievements} 
@@ -187,13 +211,14 @@ export default function UserProfile() {
           </div>
         </div>
 
-        {/* Withdrawal Overview */}
-        <WithdrawalOverview withdrawals={data.withdrawals} />
-
-        {/* Quick Actions */}
+        {/* ============================================
+            ROW 6: Quick Actions - Full Width
+            ============================================ */}
         <QuickActions onAction={handleQuickAction} />
 
-        {/* Two Column Layout - Referral & Activity */}
+        {/* ============================================
+            ROW 7: Two Column - Referral + Activity
+            ============================================ */}
         <div className={styles.twoCol}>
           <ReferralSnapshot 
             referrals={data.referral} 
@@ -205,8 +230,11 @@ export default function UserProfile() {
           />
         </div>
 
-        {/* Account Information */}
+        {/* ============================================
+            ROW 8: Account Information - Full Width
+            ============================================ */}
         <AccountInformation user={data.user} />
+
       </div>
     </div>
   );
