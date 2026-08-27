@@ -2,75 +2,261 @@
 
 .section {
   position: relative;
-  background: linear-gradient(145deg, #1a1b2e, #252640);
+  background: linear-gradient(145deg, rgba(26, 27, 46, 0.60), rgba(37, 38, 64, 0.55));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: 20px;
   border: 1px solid rgba(255, 215, 0, 0.08);
-  padding: 28px;
-  margin-bottom: 24px;
+  padding: 18px 20px;
+  margin-bottom: 0;
   overflow: hidden;
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 
+    0 8px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 0 60px rgba(255, 215, 0, 0.02);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .sectionVisible {
   opacity: 1;
   transform: translateY(0);
+  animation: sectionAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-.backgroundGlow {
+@keyframes sectionAppear {
+  0% { opacity: 0; transform: translateY(30px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ============================================
+   ANIMATED BORDER GLOW - Like Hero
+   ============================================ */
+.section::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 22px;
+  padding: 2px;
+  background: linear-gradient(
+    135deg, 
+    rgba(255, 215, 0, 0.3), 
+    rgba(255, 107, 0, 0.1), 
+    rgba(255, 215, 0, 0.3),
+    rgba(255, 20, 147, 0.1),
+    rgba(255, 215, 0, 0.3)
+  );
+  background-size: 300% 300%;
+  animation: borderGlow 4s ease-in-out infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    background-position: 0% 50%;
+    opacity: 0.5;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   BACKGROUND ANIMATED ORBS
+   ============================================ */
+.section::after {
+  content: '';
   position: absolute;
   top: -30%;
   right: -10%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(76, 175, 80, 0.03), transparent 70%);
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(76, 175, 80, 0.06), transparent 70%);
   border-radius: 50%;
   pointer-events: none;
-  animation: glowFloat 6s ease-in-out infinite;
+  animation: orbFloat1 8s ease-in-out infinite;
+  z-index: 0;
 }
 
-@keyframes glowFloat {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-20px, 20px) scale(1.1); }
-  66% { transform: translate(20px, -20px) scale(0.9); }
+@keyframes orbFloat1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.4;
+  }
+  33% {
+    transform: translate(-30px, 20px) scale(1.2);
+    opacity: 0.8;
+  }
+  66% {
+    transform: translate(30px, -20px) scale(0.8);
+    opacity: 0.5;
+  }
 }
 
-/* Header */
+/* Second Orb */
+.orb2 {
+  position: absolute;
+  bottom: -20%;
+  left: -5%;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(124, 77, 255, 0.05), rgba(0, 188, 212, 0.03), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: orbFloat2 10s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes orbFloat2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(40px, -30px) scale(1.3);
+    opacity: 0.7;
+  }
+  75% {
+    transform: translate(-30px, 40px) scale(0.7);
+    opacity: 0.4;
+  }
+}
+
+/* ============================================
+   FLOATING PARTICLES
+   ============================================ */
+.particlesContainer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(76, 175, 80, 0.4), transparent);
+  animation: floatParticle 8s ease-in-out infinite;
+  box-shadow: 0 0 15px rgba(76, 175, 80, 0.12);
+}
+
+.particle:nth-child(1) {
+  width: 5px;
+  height: 5px;
+  top: 10%;
+  left: 8%;
+  animation-delay: 0s;
+  animation-duration: 6s;
+}
+.particle:nth-child(2) {
+  width: 3px;
+  height: 3px;
+  top: 25%;
+  right: 12%;
+  animation-delay: 1s;
+  animation-duration: 8s;
+}
+.particle:nth-child(3) {
+  width: 7px;
+  height: 7px;
+  bottom: 20%;
+  left: 15%;
+  animation-delay: 2s;
+  animation-duration: 7s;
+}
+.particle:nth-child(4) {
+  width: 3px;
+  height: 3px;
+  bottom: 30%;
+  right: 20%;
+  animation-delay: 0.5s;
+  animation-duration: 9s;
+}
+.particle:nth-child(5) {
+  width: 4px;
+  height: 4px;
+  top: 45%;
+  left: 40%;
+  animation-delay: 1.5s;
+  animation-duration: 5s;
+}
+.particle:nth-child(6) {
+  width: 4px;
+  height: 4px;
+  top: 70%;
+  left: 25%;
+  animation-delay: 2.5s;
+  animation-duration: 7.5s;
+}
+
+@keyframes floatParticle {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.1;
+  }
+  25% {
+    transform: translate(20px, -30px) scale(1.5);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-10px, -45px) scale(0.7);
+    opacity: 0.3;
+  }
+  75% {
+    transform: translate(15px, -20px) scale(1.2);
+    opacity: 0.5;
+  }
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 14px;
   position: relative;
   z-index: 1;
+  flex-shrink: 0;
 }
 
 .headerLeft {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .headerIcon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(102, 187, 106, 0.08));
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.12), rgba(102, 187, 106, 0.04));
   color: #4CAF50;
-  animation: iconPulse 2s ease-in-out infinite;
+  animation: iconPulse 2.5s ease-in-out infinite;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 @keyframes iconPulse {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(76, 175, 80, 0.04); }
 }
 
 .title {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   color: #ffffff;
   margin: 0;
@@ -81,13 +267,14 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
   color: #4CAF50;
-  background: rgba(76, 175, 80, 0.1);
-  padding: 4px 12px;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px);
+  padding: 3px 12px 3px 8px;
   border-radius: 999px;
-  border: 1px solid rgba(76, 175, 80, 0.15);
+  border: 1px solid rgba(76, 175, 80, 0.08);
 }
 
 .headerBadge svg {
@@ -98,10 +285,11 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: none;
-  border: none;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   color: #8a8b9e;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -111,7 +299,9 @@
 
 .viewAllBtn:hover {
   color: #4CAF50;
-  background: rgba(76, 175, 80, 0.05);
+  background: rgba(76, 175, 80, 0.06);
+  border-color: rgba(76, 175, 80, 0.08);
+  transform: translateY(-2px);
 }
 
 .viewAllBtn:hover svg {
@@ -122,31 +312,34 @@
   transition: transform 0.3s ease;
 }
 
-/* Referral Code Card */
+/* ============================================
+   REFERRAL CODE CARD
+   ============================================ */
 .referralCodeCard {
   position: relative;
-  background: linear-gradient(135deg, rgba(76, 175, 80, 0.06), rgba(102, 187, 106, 0.02));
-  border: 1px solid rgba(76, 175, 80, 0.12);
-  border-radius: 14px;
-  padding: 18px 20px;
-  margin-bottom: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(76, 175, 80, 0.06);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
   transition: all 0.4s ease;
 }
 
 .referralCodeCard:hover {
-  border-color: rgba(76, 175, 80, 0.25);
+  border-color: rgba(76, 175, 80, 0.12);
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(76, 175, 80, 0.05);
+  box-shadow: 0 8px 30px rgba(76, 175, 80, 0.04);
 }
 
 .codeLabel {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: #8a8b9e;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .codeLabel svg {
@@ -157,18 +350,18 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
 }
 
 .codeValue {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: #FFD700;
   letter-spacing: 0.05em;
-  background: rgba(255, 215, 0, 0.05);
-  padding: 4px 14px;
+  background: rgba(255, 215, 0, 0.04);
+  padding: 3px 12px;
   border-radius: 8px;
-  border: 1px solid rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.06);
 }
 
 .copyBtn {
@@ -176,26 +369,26 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   color: #8a8b9e;
-  padding: 6px 14px;
+  padding: 4px 12px;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
 }
 
 .copyBtn:hover {
-  background: rgba(76, 175, 80, 0.1);
-  border-color: rgba(76, 175, 80, 0.2);
+  background: rgba(76, 175, 80, 0.08);
+  border-color: rgba(76, 175, 80, 0.12);
   color: #4CAF50;
 }
 
 .copyBtnSuccess {
-  background: rgba(76, 175, 80, 0.15);
-  border-color: rgba(76, 175, 80, 0.3);
+  background: rgba(76, 175, 80, 0.12);
+  border-color: rgba(76, 175, 80, 0.2);
   color: #4CAF50;
 }
 
@@ -204,12 +397,13 @@
   bottom: calc(100% + 8px);
   left: 50%;
   transform: translateX(-50%);
-  background: #1a1b2e;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(26, 27, 46, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 215, 0, 0.06);
   color: #ffffff;
   padding: 4px 12px;
   border-radius: 6px;
-  font-size: 11px;
+  font-size: 10px;
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
@@ -221,7 +415,7 @@
 }
 
 .codeShare {
-  margin-top: 10px;
+  margin-top: 8px;
   display: flex;
   justify-content: flex-end;
 }
@@ -230,43 +424,49 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   color: #8a8b9e;
-  padding: 4px 14px;
+  padding: 3px 12px;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
 }
 
 .shareBtn:hover {
-  background: rgba(76, 175, 80, 0.1);
-  border-color: rgba(76, 175, 80, 0.2);
+  background: rgba(76, 175, 80, 0.08);
+  border-color: rgba(76, 175, 80, 0.12);
   color: #4CAF50;
 }
 
-/* Stats Grid */
+/* ============================================
+   STATS GRID - FIXED 3 COLUMNS
+   ============================================ */
 .statsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 10px;
+  margin-bottom: 14px;
   position: relative;
   z-index: 1;
+  width: 100%;
 }
 
 .statCard {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 14px;
-  padding: 16px;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 14px 12px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  animation: cardAppear 0.5s ease backwards;
+  animation: cardAppear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  width: 100%;
+  min-width: 0;
 }
 
 .statCard:nth-child(1) { animation-delay: 0.10s; }
@@ -280,19 +480,19 @@
 
 .statCard:hover {
   transform: translateY(-3px);
-  border-color: rgba(76, 175, 80, 0.15);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border-color: rgba(76, 175, 80, 0.08);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .statIconWrapper {
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  background: rgba(76, 175, 80, 0.08);
+  background: rgba(76, 175, 80, 0.06);
   color: #4CAF50;
   transition: all 0.3s ease;
 }
@@ -307,7 +507,7 @@
 }
 
 .statValue {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: #ffffff;
   display: block;
@@ -315,7 +515,7 @@
 }
 
 .statLabel {
-  font-size: 11px;
+  font-size: 10px;
   color: #8a8b9e;
   font-weight: 500;
 }
@@ -324,10 +524,10 @@
   display: flex;
   align-items: center;
   gap: 2px;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
   color: #4CAF50;
-  background: rgba(76, 175, 125, 0.08);
+  background: rgba(76, 175, 125, 0.06);
   padding: 2px 8px;
   border-radius: 6px;
   flex-shrink: 0;
@@ -341,13 +541,13 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
   color: #FFD700;
-  background: rgba(255, 215, 0, 0.1);
-  padding: 2px 10px 2px 8px;
+  background: rgba(255, 215, 0, 0.06);
+  padding: 2px 10px 2px 6px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.06);
   flex-shrink: 0;
 }
 
@@ -355,34 +555,37 @@
   color: #FFD700;
 }
 
-/* Milestone Card */
+/* ============================================
+   MILESTONE CARD
+   ============================================ */
 .milestoneCard {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 14px;
-  padding: 18px 20px;
-  margin-bottom: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
   position: relative;
   z-index: 1;
   transition: all 0.4s ease;
 }
 
 .milestoneCard:hover {
-  border-color: rgba(76, 175, 80, 0.15);
+  border-color: rgba(76, 175, 80, 0.08);
 }
 
 .milestoneHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .milestoneTitle {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: #ffffff;
 }
@@ -392,7 +595,7 @@
 }
 
 .milestoneCount {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: #8a8b9e;
 }
@@ -400,7 +603,7 @@
 .milestoneTrack {
   height: 8px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.04);
   overflow: visible;
   position: relative;
 }
@@ -411,7 +614,7 @@
   background: linear-gradient(90deg, #4CAF50, #66BB6A);
   transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
-  box-shadow: 0 0 20px rgba(76, 175, 80, 0.2);
+  box-shadow: 0 0 20px rgba(76, 175, 80, 0.15);
 }
 
 .milestoneFillAnimated {
@@ -419,14 +622,14 @@
 }
 
 @keyframes fillPulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(76, 175, 80, 0.2); }
-  50% { box-shadow: 0 0 40px rgba(76, 175, 80, 0.4); }
+  0%, 100% { box-shadow: 0 0 20px rgba(76, 175, 80, 0.15); }
+  50% { box-shadow: 0 0 40px rgba(76, 175, 80, 0.25); }
 }
 
 .milestoneFillGlow {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
   animation: glowSweep 2s ease-in-out infinite;
 }
 
@@ -441,7 +644,7 @@
   left: 0;
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, rgba(76, 175, 80, 0.1), transparent);
+  background: linear-gradient(90deg, rgba(76, 175, 80, 0.08), transparent);
   filter: blur(8px);
   pointer-events: none;
   transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -451,14 +654,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 .milestoneMessage {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
+  font-size: 11px;
   color: #8a8b9e;
   font-weight: 500;
 }
@@ -468,16 +671,18 @@
 }
 
 .milestonePercent {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: #4CAF50;
 }
 
-/* Milestone Markers */
+/* ============================================
+   MILESTONE MARKERS
+   ============================================ */
 .milestoneMarkers {
   position: relative;
-  height: 24px;
-  margin-top: 6px;
+  height: 20px;
+  margin-top: 4px;
   width: 100%;
 }
 
@@ -495,28 +700,30 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   transition: all 0.5s ease;
 }
 
 .markerLabel {
   font-size: 8px;
-  color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.15);
   white-space: nowrap;
 }
 
 .markerFinal .markerDot {
   width: 8px;
   height: 8px;
-  background: rgba(255, 215, 0, 0.2);
+  background: rgba(255, 215, 0, 0.15);
 }
 
 .markerFinal .markerLabel svg {
   color: #FFD700;
 }
 
-/* Refer Action Button */
+/* ============================================
+   REFER ACTION BUTTON
+   ============================================ */
 .referActionBtn {
   display: inline-flex;
   align-items: center;
@@ -524,9 +731,9 @@
   background: linear-gradient(135deg, #4CAF50, #66BB6A);
   border: none;
   color: #ffffff;
-  padding: 12px 24px;
+  padding: 10px 20px;
   border-radius: 12px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -538,7 +745,7 @@
 
 .referActionBtn:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 30px rgba(76, 175, 80, 0.3);
+  box-shadow: 0 8px 30px rgba(76, 175, 80, 0.25);
 }
 
 .referActionBtn:active {
@@ -553,59 +760,89 @@
   transform: translateX(4px);
 }
 
-/* Responsive */
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+/* Tablet */
 @media (max-width: 1024px) {
+  .section {
+    padding: 16px 18px;
+  }
+
   .statsGrid {
     grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .section {
-    padding: 20px;
-  }
-
-  .statsGrid {
-    grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 8px;
   }
 
   .statCard {
-    padding: 14px;
+    padding: 12px 10px;
   }
 
   .statValue {
-    font-size: 18px;
-  }
-
-  .codeValue {
     font-size: 16px;
-  }
-
-  .header {
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .viewAllBtn {
-    margin-left: auto;
-  }
-
-  .milestoneMarkers {
-    display: none;
   }
 }
 
-@media (max-width: 480px) {
+/* Mobile */
+@media (max-width: 768px) {
   .section {
     padding: 16px;
     border-radius: 16px;
   }
 
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .statCard {
+    padding: 12px;
+  }
+
+  .statValue {
+    font-size: 15px;
+  }
+
+  .codeValue {
+    font-size: 15px;
+  }
+
+  .header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .viewAllBtn {
+    margin-left: auto;
+    padding: 3px 10px;
+    font-size: 10px;
+  }
+
+  .milestoneMarkers {
+    display: none;
+  }
+
+  .particlesContainer {
+    display: none;
+  }
+
+  .orb2 {
+    display: none;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .section {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
   .header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    gap: 6px;
   }
 
   .headerBadge {
@@ -613,22 +850,27 @@
   }
 
   .headerIcon {
-    width: 34px;
-    height: 34px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .headerIcon svg {
+    width: 14px;
+    height: 14px;
   }
 
   .title {
-    font-size: 16px;
+    font-size: 15px;
   }
 
   .viewAllBtn {
     margin-left: 0;
     padding: 2px 8px;
-    font-size: 11px;
+    font-size: 10px;
   }
 
   .referralCodeCard {
-    padding: 14px 16px;
+    padding: 12px 14px;
   }
 
   .codeWrapper {
@@ -636,7 +878,7 @@
   }
 
   .codeValue {
-    font-size: 14px;
+    font-size: 13px;
     padding: 2px 10px;
     width: 100%;
     text-align: center;
@@ -649,26 +891,26 @@
 
   .statsGrid {
     grid-template-columns: 1fr;
-    gap: 8px;
+    gap: 6px;
   }
 
   .statCard {
-    padding: 12px;
-    gap: 10px;
+    padding: 10px 12px;
+    gap: 8px;
   }
 
   .statValue {
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .statIconWrapper {
-    width: 34px;
-    height: 34px;
+    width: 30px;
+    height: 30px;
   }
 
   .statIconWrapper svg {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
   }
 
   .statTrend {
@@ -676,20 +918,20 @@
   }
 
   .statBadge {
-    font-size: 9px;
-    padding: 1px 8px 1px 6px;
+    font-size: 8px;
+    padding: 1px 6px 1px 4px;
   }
 
   .milestoneCard {
-    padding: 14px 16px;
+    padding: 12px 14px;
   }
 
   .milestoneCount {
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .milestoneMessage {
-    font-size: 11px;
+    font-size: 10px;
   }
 
   .milestonePercent {
@@ -701,7 +943,19 @@
   }
 
   .referActionBtn {
-    padding: 10px 18px;
-    font-size: 13px;
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+
+  .section::after {
+    display: none;
+  }
+
+  .particlesContainer {
+    display: none;
+  }
+
+  .orb2 {
+    display: none;
   }
 }
