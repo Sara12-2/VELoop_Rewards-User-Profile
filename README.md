@@ -230,7 +230,7 @@ src/
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/VELoop_Rewards-User-Profile.git
+git clone https://github.com/Sara12-2/VELoop_Rewards-User-Profile
 
 # Navigate to project directory
 cd VELoop_Rewards-User-Profile
@@ -377,6 +377,7 @@ UserProfile (Page)
 
 🔴 **View Live Demo**
 
+https://ve-loop-rewards-user-profile.vercel.app/
 
 ---
 
@@ -392,8 +393,8 @@ https://github.com/Sara12-2/VELoop_Rewards-User-Profile
 
 **Your Name**
 
-* GitHub: `@your-username`
-* LinkedIn: Your Name
+* GitHub: `Sara12-2`
+* LinkedIn: Sara Manzoor
 
 ---
 
