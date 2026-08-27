@@ -4,13 +4,14 @@
   position: relative;
   background: linear-gradient(145deg, #1a1b2e, #252640);
   border-radius: 20px;
-  border: 1px solid rgba(255, 215, 0, 0.08);
-  padding: 28px;
-  margin-bottom: 24px;
+  border: 1px solid rgba(255, 215, 0, 0.06);
+  padding: 24px;
+  margin-bottom: 20px;
   overflow: hidden;
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .sectionVisible {
@@ -18,6 +19,7 @@
   transform: translateY(0);
 }
 
+/* Background Glow */
 .backgroundGlow {
   position: absolute;
   top: -30%;
@@ -41,7 +43,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   position: relative;
   z-index: 1;
 }
@@ -59,7 +61,7 @@
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 107, 0, 0.08));
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.12), rgba(255, 107, 0, 0.04));
   color: #FFD700;
   animation: iconPulse 2s ease-in-out infinite;
 }
@@ -87,11 +89,7 @@
   background: rgba(255, 255, 255, 0.04);
   padding: 4px 12px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.headerBadge svg {
-  color: #8a8b9e;
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .viewAllBtn {
@@ -122,139 +120,162 @@
   transition: transform 0.3s ease;
 }
 
-/* Activity List */
-.activityList {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+/* Orbit Container */
+.orbitContainer {
   position: relative;
   z-index: 1;
+  overflow: hidden;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  padding: 6px;
 }
 
-/* Activity Item */
-.activityItem {
+.orbitTrack {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+/* Orbit Items */
+.orbitItem {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 12px 16px;
+  gap: 12px;
+  padding: 12px 14px;
   background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.03);
   border-radius: 12px;
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
   overflow: hidden;
-  animation: itemAppear 0.5s ease backwards;
+  animation: orbitItemAppear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
 }
 
-.activityItem:nth-child(1) { animation-delay: 0.05s; }
-.activityItem:nth-child(2) { animation-delay: 0.10s; }
-.activityItem:nth-child(3) { animation-delay: 0.15s; }
-.activityItem:nth-child(4) { animation-delay: 0.20s; }
-
-@keyframes itemAppear {
+@keyframes orbitItemAppear {
   0% {
     opacity: 0;
-    transform: translateX(-20px) scale(0.95);
+    transform: scale(0.9);
   }
   100% {
     opacity: 1;
-    transform: translateX(0) scale(1);
+    transform: scale(1);
   }
 }
 
-.activityItemHover {
-  transform: translateX(4px) scale(1.01);
+.orbitItem:hover {
+  transform: translateY(-2px) scale(1.01);
   background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 215, 0, 0.1);
+  border-color: rgba(255, 215, 0, 0.06);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
-.activityIconWrapper {
-  width: 40px;
-  height: 40px;
+.orbitGlow {
+  position: absolute;
+  top: -30%;
+  right: -20%;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  opacity: 0;
+  filter: blur(40px);
+  transition: all 0.5s ease;
+  pointer-events: none;
+}
+
+.orbitItem:hover .orbitGlow {
+  opacity: 0.12;
+  transform: scale(1.3);
+}
+
+.orbitIconWrapper {
+  width: 36px;
+  height: 36px;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.3s ease;
 }
 
-.activityItemHover .activityIconWrapper {
-  transform: scale(1.1) rotate(-5deg);
+.orbitItem:hover .orbitIconWrapper {
+  transform: scale(1.05) rotate(-4deg);
 }
 
-.activityContent {
+.orbitContent {
   flex: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
   min-width: 0;
+  gap: 8px;
 }
 
-.activityTextWrapper {
+.orbitTextWrapper {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
   min-width: 0;
+  flex: 1;
 }
 
-.activityText {
-  font-size: 14px;
+.orbitText {
+  font-size: 13px;
   font-weight: 500;
-  color: #ffffff;
+  color: #d0d1e0;
   transition: color 0.3s ease;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.activityItemHover .activityText {
+.orbitItem:hover .orbitText {
   color: #FFD700;
 }
 
-.activityTime {
-  font-size: 11px;
+.orbitTime {
+  font-size: 10px;
   color: #6a6b7e;
 }
 
-.activityMeta {
+.orbitMeta {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
   flex-shrink: 0;
 }
 
-.activityAmount {
-  font-size: 14px;
+.orbitAmount {
+  font-size: 13px;
   font-weight: 700;
-  color: #ffffff;
+  color: #d0d1e0;
   transition: color 0.3s ease;
 }
 
-.activityItemHover .activityAmount {
+.orbitItem:hover .orbitAmount {
   color: #FFD700;
 }
 
-.activityType {
+.orbitType {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  font-size: 10px;
+  gap: 3px;
+  font-size: 9px;
   font-weight: 600;
   color: #8a8b9e;
-  background: rgba(255, 255, 255, 0.04);
-  padding: 2px 10px 2px 6px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 2px 8px 2px 6px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  white-space: nowrap;
 }
 
 .typeIconEarn { color: #4CAF50; }
 .typeIconSpend { color: #E57373; }
 .typeIconAchievement { color: #FFD700; }
 
-/* Activity Shine */
-.activityShine {
+.orbitShine {
   position: absolute;
   top: -50%;
   left: -50%;
@@ -263,10 +284,10 @@
   background: linear-gradient(
     45deg,
     transparent 30%,
-    rgba(255, 255, 255, 0.03) 50%,
+    rgba(255, 215, 0, 0.02) 50%,
     transparent 70%
   );
-  animation: shineSlide 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: shineSlide 0.6s ease forwards;
   pointer-events: none;
 }
 
@@ -275,16 +296,77 @@
   100% { transform: translateX(100%) rotate(45deg); }
 }
 
-/* Activity Stats */
-.activityStats {
+/* Orbit Controls */
+.orbitControls {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  gap: 12px;
-  margin-top: 16px;
-  padding: 14px 20px;
-  background: rgba(255, 255, 255, 0.02);
+  justify-content: center;
+  gap: 14px;
+  padding: 10px 0 4px;
+}
+
+.orbitNavBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.04);
+  color: #8a8b9e;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.orbitNavBtn:hover {
+  background: rgba(255, 215, 0, 0.06);
+  border-color: rgba(255, 215, 0, 0.08);
+  color: #FFD700;
+  transform: scale(1.08);
+}
+
+.orbitNavBtn:active {
+  transform: scale(0.92);
+}
+
+.orbitDots {
+  display: flex;
+  gap: 6px;
+}
+
+.orbitDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.orbitDot:hover {
+  transform: scale(1.2);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.orbitDotActive {
+  background: #FFD700;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+  width: 24px;
+  border-radius: 4px;
+}
+
+/* Activity Stats */
+.activityStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 14px;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.03);
   border-radius: 12px;
   position: relative;
   z-index: 1;
@@ -294,6 +376,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  justify-content: center;
 }
 
 .statIconWrapper {
@@ -305,6 +388,7 @@
   justify-content: center;
   background: rgba(255, 215, 0, 0.05);
   color: #FFD700;
+  flex-shrink: 0;
 }
 
 .statInfo {
@@ -326,35 +410,29 @@
   color: #ffffff;
 }
 
-.statDivider {
-  width: 1px;
-  height: 30px;
-  background: rgba(255, 255, 255, 0.04);
-}
-
-/* View More Button */
+/* View More */
 .viewMoreBtn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   background: none;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   color: #8a8b9e;
   padding: 10px 24px;
   border-radius: 10px;
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.3s ease;
   width: 100%;
   justify-content: center;
-  margin-top: 16px;
+  margin-top: 14px;
   position: relative;
   z-index: 1;
 }
 
 .viewMoreBtn:hover {
-  border-color: rgba(255, 215, 0, 0.2);
+  border-color: rgba(255, 215, 0, 0.12);
   color: #FFD700;
   background: rgba(255, 215, 0, 0.03);
   transform: translateY(-2px);
@@ -369,74 +447,88 @@
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .section {
     padding: 20px;
   }
 
-  .activityItem {
-    padding: 10px 14px;
+  .orbitTrack {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 16px;
   }
 
-  .activityContent {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
+  .orbitTrack {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
   }
 
-  .activityMeta {
-    width: 100%;
-    justify-content: flex-start;
+  .orbitItem {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .orbitIconWrapper {
+    width: 30px;
+    height: 30px;
+  }
+
+  .orbitText {
+    font-size: 12px;
+  }
+
+  .orbitAmount {
+    font-size: 12px;
   }
 
   .activityStats {
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 12px 16px;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 10px 12px;
   }
 
-  .statDivider {
-    display: none;
-  }
-
-  .statItem {
-    flex: 1;
-    min-width: 80px;
+  .statValue {
+    font-size: 13px;
   }
 
   .header {
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
   }
 
   .viewAllBtn {
     margin-left: auto;
-  }
-}
-
-@media (max-width: 480px) {
-  .section {
-    padding: 16px;
-    border-radius: 16px;
-  }
-
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+    padding: 4px 10px;
+    font-size: 11px;
   }
 
   .headerBadge {
     display: none;
   }
 
+  .title {
+    font-size: 16px;
+  }
+
   .headerIcon {
     width: 34px;
     height: 34px;
   }
+}
 
-  .title {
-    font-size: 16px;
+@media (max-width: 480px) {
+  .section {
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
 
   .viewAllBtn {
@@ -445,56 +537,101 @@
     font-size: 11px;
   }
 
-  .activityItem {
+  .headerIcon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .title {
+    font-size: 15px;
+  }
+
+  .orbitTrack {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .orbitItem {
     padding: 10px 12px;
-    gap: 10px;
-    border-radius: 10px;
   }
 
-  .activityIconWrapper {
-    width: 34px;
-    height: 34px;
+  .orbitIconWrapper {
+    width: 28px;
+    height: 28px;
   }
 
-  .activityIconWrapper svg {
+  .orbitIconWrapper svg {
     width: 14px;
     height: 14px;
   }
 
-  .activityText {
+  .orbitText {
     font-size: 12px;
+    white-space: normal;
   }
 
-  .activityTime {
-    font-size: 10px;
-  }
-
-  .activityAmount {
-    font-size: 12px;
-  }
-
-  .activityType {
+  .orbitTime {
     font-size: 9px;
-    padding: 1px 8px 1px 4px;
+  }
+
+  .orbitMeta {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .orbitAmount {
+    font-size: 12px;
+  }
+
+  .orbitType {
+    font-size: 8px;
+  }
+
+  .orbitControls {
+    gap: 10px;
+  }
+
+  .orbitNavBtn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .orbitNavBtn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .orbitDot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .orbitDotActive {
+    width: 18px;
   }
 
   .activityStats {
-    flex-direction: column;
-    gap: 8px;
-    padding: 12px;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 10px;
   }
 
   .statItem {
-    width: 100%;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
-  .statDivider {
-    display: none;
+  .statValue {
+    font-size: 13px;
   }
 
   .viewMoreBtn {
     padding: 8px 16px;
     font-size: 12px;
+    margin-top: 10px;
+  }
+
+  .viewMoreBtn svg {
+    width: 14px;
+    height: 14px;
   }
 }
